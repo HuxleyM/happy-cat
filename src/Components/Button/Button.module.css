@@ -1,3 +1,5 @@
+@import '../../../variables.css';
+
 .mainActionButton{
     color: black;
     height:54px;
@@ -8,13 +10,13 @@
 }
 
 .error{
-    background: #EB6953;
+    background: var(--color-red);
 }
 
 .success{
-    background: #81994D;
+    background: var(--color-green);
 }
 
 .incomplete{
-    background: #C4C4C4;
+    background: var(--color-grey);
 }
