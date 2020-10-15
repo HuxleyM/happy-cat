@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Signup from './Signup'
 import Form from './Form/Form'
-import Confirmation from './Confirmation/Confirmation'
+import Completed from './Completed/Completed'
 import Loading from './Loading/Loading'
 import {UserContext} from '../../Context/userContext'
 
@@ -17,7 +17,7 @@ describe('Signup Component', () => {
         )
         expect(wrapper.containsMatchingElement(<Loading/>)).toEqual(true)
         expect(wrapper.containsMatchingElement(<Form />)).toEqual(false); 
-        expect(wrapper.containsMatchingElement(<Confirmation />)).toEqual(false); 
+        expect(wrapper.containsMatchingElement(<Completed />)).toEqual(false); 
     })
 
     it("Should render Form component if a user hasn't completed sign up",()=>{
@@ -29,7 +29,7 @@ describe('Signup Component', () => {
         )
     
         expect(wrapper.containsMatchingElement(<Form />)).toEqual(true); 
-        expect(wrapper.containsMatchingElement(<Confirmation />)).toEqual(false); 
+        expect(wrapper.containsMatchingElement(<Completed />)).toEqual(false); 
     })
 
     it("Should render Confirmation component if a user has completed sign up",()=>{
@@ -40,7 +40,7 @@ describe('Signup Component', () => {
             </UserContext.Provider>
         )
         expect(wrapper.containsMatchingElement(<Form />)).toEqual(false); 
-        expect(wrapper.containsMatchingElement(<Confirmation />)).toEqual(true); 
+        expect(wrapper.containsMatchingElement(<Completed />)).toEqual(true); 
 
     })
 })
