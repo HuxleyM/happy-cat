@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import './App.css';
 import Styles from'./App.module.css';
 import { UserContext } from './Context/userContext';
@@ -8,7 +8,7 @@ function App() {
     const [user, setUser] = useState({
         completed: false,
     })
-    const providerValue = useMemo({user, setUser}),[user,setUser]
+    const providerValue = useMemo(() => ({user, setUser}),[user,setUser]);
   return (
     <div className="App">
         <UserContext.Provider value={providerValue}>
