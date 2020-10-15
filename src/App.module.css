@@ -1,0 +1,9 @@
+.mainHeader{
+    border-bottom: 10pt solid #c4c4c4;
+    padding: 36px 0px 36px 18px;
+}
+
+.mainHeader > h1{
+    font-size:48px;
+    font-weight: bold;
+}
