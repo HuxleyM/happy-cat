@@ -9,7 +9,9 @@ function App() {
         <header className={Styles.mainHeader}>
             <h1>HappyCat.</h1>
         </header>
-        <Signup/>
+        <body className={Styles.mainBody}>
+            <Signup/>
+        </body>
     </div>
   );
 }

@@ -11,7 +11,6 @@ describe('App', () => {
     expect(wrapped.containsMatchingElement(<Signup />)).toEqual(true); 
     expect(wrapped).toMatchSnapshot();
   });
-
 });
 
 
