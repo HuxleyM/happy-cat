@@ -1,9 +1,17 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { shallow } from 'enzyme';
 import App from './App';
+import Signup from './Signup/Signup'
 
-test('renders Signup Component', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+let wrapped = shallow(<App></App>);
+
+describe('App', () => {
+  it('should render the Signup Component correctly', () => {  
+    expect(wrapped.containsMatchingElement(<Signup />)).toEqual(true); 
+    expect(wrapped).toMatchSnapshot();
+  });
+
 });
+
+
