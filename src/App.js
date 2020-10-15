@@ -4,6 +4,8 @@ import Styles from'./App.module.css';
 import { UserContext } from './Context/userContext';
 import Signup from './pages/Signup/Signup'
 
+
+
 function App() {
     const [user, setUser] = useState({
         completed: false,
@@ -16,6 +18,7 @@ function App() {
                 <h1>HappyCat.</h1>
             </header>
             <main className={Styles.mainBody}>
+
                 <Signup/>
             </main>
         </UserContext.Provider>

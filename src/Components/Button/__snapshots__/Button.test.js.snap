@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Button is passed error should be disabled and red 1`] = `
+<button
+  className="mainActionButton error"
+  disabled={true}
+>
+  jungle is massive
+</button>
+`;
+
+exports[`Button Button is passed incomplete should be disabled and grey 1`] = `
+<button
+  className="mainActionButton incomplete"
+  disabled={true}
+>
+  jungle is massive
+</button>
+`;
+
+exports[`Button Button is passed success should be enabled and green 1`] = `
+<button
+  className="mainActionButton success"
+  disabled={false}
+>
+  jungle is massive
+</button>
+`;

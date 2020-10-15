@@ -1,0 +1,20 @@
+.mainActionButton{
+    color: black;
+    height:54px;
+    width:188px;
+    border-radius:10px;
+    cursor: pointer;
+    border-style: none;
+}
+
+.error{
+    background: #EB6953;
+}
+
+.success{
+    background: #81994D;
+}
+
+.incomplete{
+    background: #C4C4C4;
+}
