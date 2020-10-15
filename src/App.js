@@ -11,11 +11,11 @@ function App() {
   const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
     <div className="App">
-      <UserContext.Provider value={providerValue}>
-        <header className={Styles.mainHeader}>
+      <UserContext.Provider value={ providerValue }>
+        <header className={ Styles.mainHeader }>
           <h1>HappyCat.</h1>
         </header>
-        <main className={Styles.mainBody}>
+        <main className={ Styles.mainBody }>
 
           <Signup />
         </main>
