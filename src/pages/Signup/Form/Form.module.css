@@ -4,7 +4,6 @@
   display: inline-block;
   padding: 5px;
   margin-right: 10px;
-  background: pink;
   border-bottom: 3pt solid var(--colour-grey);
 }
 
@@ -19,4 +18,9 @@
   justify-content: space-between;
   flex-wrap: wrap;
   margin-bottom: 24px;
+}
+
+.addBreathingSpace {
+  padding-bottom: 28px;
+  border-bottom: 3pt solid var(--colour-grey);
 }
