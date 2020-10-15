@@ -8,18 +8,19 @@ import {UserContext} from '../Context/userContext'
 describe('Signup Component', () => {
 
     it("Should render Form component if a user hasn't completed sign up",()=>{
-        const context = { completed: false}
+        const context = { user:{completed: false}}
         const wrapper = mount(
             <UserContext.Provider value={context}>
                 <Signup/>
             </UserContext.Provider>
         )
+    
         expect(wrapper.containsMatchingElement(<Form />)).toEqual(true); 
         expect(wrapper.containsMatchingElement(<Confirmation />)).toEqual(false); 
     })
 
     it("Should render Confirmation component if a user has completed sign up",()=>{
-        const context = { completed: true}
+        const context = { user:{completed: true}}
         const wrapper = mount(
             <UserContext.Provider value={context}>
                 <Signup/>

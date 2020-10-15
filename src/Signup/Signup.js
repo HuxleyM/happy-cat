@@ -10,6 +10,7 @@ function Signup(){
     
     return (
         <div className={Styles.signUpWrapper}>
+            {!user && <div>Loading</div>} 
             {user.completed ? <Confirmation/>: <Form/>}
         </div>
     )
