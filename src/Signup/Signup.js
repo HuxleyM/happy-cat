@@ -1,5 +1,5 @@
 import React from 'react';
-import './Signup.css';
+import './Signup.module.css';
 
 function Signup(){
 
@@ -10,3 +10,5 @@ function Signup(){
         </div>
     )
 }
+
+export default Signup
