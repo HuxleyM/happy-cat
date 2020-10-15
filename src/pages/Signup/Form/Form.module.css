@@ -1,0 +1,22 @@
+@import "../../../variables.css";
+
+.navBar > ul > li {
+  display: inline-block;
+  padding: 5px;
+  margin-right: 10px;
+  background: pink;
+  border-bottom: 3pt solid var(--colour-grey);
+}
+
+.header {
+  font-size: 28px;
+  font-weight: 700;
+  margin-right: 100px;
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
