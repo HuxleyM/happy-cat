@@ -1,11 +1,9 @@
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 
-
-
-function Loading(){    
-    return (
-       <div>Loading</div>
-    )
+function Loading() {
+  return (
+    <div>Loading</div>
+  );
 }
 
-export default Loading
+export default Loading;
