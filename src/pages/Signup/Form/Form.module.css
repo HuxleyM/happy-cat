@@ -24,3 +24,8 @@
   padding-bottom: 28px;
   border-bottom: 3pt solid var(--colour-grey);
 }
+
+.questionContainer {
+  display: flex;
+  justify-content: space-between;
+}

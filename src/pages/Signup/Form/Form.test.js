@@ -46,8 +46,17 @@ describe('Form component', () => {
         expect(wrapper.containsMatchingElement(<Confirm />)).toEqual(true);
     })
 
-    describe('Navagation', ()=>{
+    describe('Navigation', ()=>{
         it('if i have answered all questions i should be able to navagate back and forth', ()=> {
+
+        })
+
+        it('I cannot click forward if i havent answered/has errors the question', () => {
+
+        })
+
+
+        it('I cannot click forward if i havent answered/has errors the question', () => {
 
         })
     })

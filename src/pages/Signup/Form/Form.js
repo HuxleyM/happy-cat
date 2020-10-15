@@ -42,10 +42,10 @@ function Form() {
           </p>
         </div>
       </div>
-      <div>
-        <div className={Styles.leftArrow}></div>
+      <div className={Styles.questionContainer}>
+        <div className={Styles.leftArrow}> back </div>
         {question}
-        <div className={Styles.RightArrow}></div>
+        <div className={Styles.RightArrow}> next </div>
       </div>
     </div>
   );
