@@ -43,6 +43,7 @@
         ],
         "collectCoverageFrom": [
             "src/**/*.js",
+            "src/pages/**/*.js",
             "!src/index.js"
         ],
         "coverageReporters": [

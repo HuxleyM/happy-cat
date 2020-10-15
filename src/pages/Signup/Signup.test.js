@@ -4,7 +4,7 @@ import Signup from './Signup'
 import Form from './Form/Form'
 import Confirmation from './Confirmation/Confirmation'
 import Loading from './Loading/Loading'
-import {UserContext} from '../Context/userContext'
+import {UserContext} from '../../Context/userContext'
 
 describe('Signup Component', () => {
 

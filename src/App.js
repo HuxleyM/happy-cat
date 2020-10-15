@@ -2,7 +2,7 @@ import React, {useState, useMemo} from 'react';
 import './App.css';
 import Styles from'./App.module.css';
 import { UserContext } from './Context/userContext';
-import Signup from './Signup/Signup'
+import Signup from './pages/Signup/Signup'
 
 function App() {
     const [user, setUser] = useState({

@@ -3,7 +3,7 @@ import Styles from './Signup.module.css';
 import Form from './Form/Form';
 import Confirmation from './Confirmation/Confirmation'
 import Loading from './Loading/Loading'
-import {UserContext} from '../Context/userContext'
+import {UserContext} from '../../Context/userContext'
 
 const selectComponent = (user) => {
     if(!user) return <Loading/>

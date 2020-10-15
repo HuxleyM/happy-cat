@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import App from './App';
-import Signup from './Signup/Signup'
+import Signup from './pages/Signup/Signup'
 
 
 let wrapped = shallow(<App></App>);
