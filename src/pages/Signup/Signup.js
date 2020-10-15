@@ -20,6 +20,6 @@ function Signup() {
       {ComponentToDisplay}
     </div>
   );
-}
+} 
 
 export default Signup;
