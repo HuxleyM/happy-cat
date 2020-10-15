@@ -1,8 +1,19 @@
-import React from "react";
+import React, {useContext} from "react";
 import Styles from "./Form.module.css";
-import Details from "./Questions/Details/Details"
+import { UserContext } from "../../../Context/userContext";
+import Details from './Questions/Details/Details';
+import Preferences from './Questions/Preferences/Preferences';
+import Confirm from './Questions/Confirm/Confirm'
+
+const questionToShow = ({currentlyOnQuestion})=>{
+    if(!currentlyOnQuestion && currentlyOnQuestion !== 0) return <div>Loading</div>
+    const Questions = [<Details/>,<Preferences/>,<Confirm/>]
+    return Questions[currentlyOnQuestion]
+}
 
 function Form() {
+  const { user, setUser } = useContext(UserContext);
+  const question = questionToShow(user)
   return (
     <div>
       <div className={Styles.addBreathingSpace}>
@@ -32,9 +43,9 @@ function Form() {
         </div>
       </div>
       <div>
-          <div className={Styles.leftArrow}></div>
-            <Details/>
-          <div className={Styles.RightArrow}></div>
+        <div className={Styles.leftArrow}></div>
+        {question}
+        <div className={Styles.RightArrow}></div>
       </div>
     </div>
   );

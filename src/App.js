@@ -7,6 +7,8 @@ import Signup from './pages/Signup/Signup';
 function App() {
   const [user, setUser] = useState({
     completed: false,
+    questionsAnswered: 0,
+    currentlyOnQuestion:0,
   });
   const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
   return (
