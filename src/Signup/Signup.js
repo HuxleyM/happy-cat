@@ -1,13 +1,16 @@
 import React,{useContext} from 'react';
 import Styles from './Signup.module.css';
+import Form from './Form/Form';
+import Confirmation from './Confirmation/Confirmation'
 import {UserContext} from '../Context/userContext'
 
 function Signup(){
-    const {completed} = useContext(UserContext)
-    // logic for which component to render
+    const {user,setUser} = useContext(UserContext)
+    console.log('heya', user)
+    
     return (
         <div className={Styles.signUpWrapper}>
-            
+            {user.completed ? <Confirmation/>: <Form/>}
         </div>
     )
 }

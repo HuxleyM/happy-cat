@@ -15,9 +15,9 @@ function App() {
             <header className={Styles.mainHeader}>
                 <h1>HappyCat.</h1>
             </header>
-            <body className={Styles.mainBody}>
+            <main className={Styles.mainBody}>
                 <Signup/>
-            </body>
+            </main>
         </UserContext.Provider>
     </div>
   );
