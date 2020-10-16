@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Confirm component should match snapshot 1`] = `
+<Confirm>
+  <div>
+    <div
+      className="header"
+    >
+      <h3>
+        Confirm
+      </h3>
+      <p>
+        Please confirm your details before we finalize your signup. Use the navigation button to go backwards if things look wrong.
+      </p>
+    </div>
+    <div
+      className="flexContainer"
+    >
+      <h4
+        className="space"
+      >
+         UserDetails 
+      </h4>
+      <div>
+        <p
+          className="bold"
+        >
+          User name:
+        </p>
+        <p>
+          kipo
+        </p>
+      </div>
+      <div>
+        <p
+          className="bold"
+        >
+          Email:
+        </p>
+        <p>
+          kipo@wondbe.com
+        </p>
+      </div>
+      <div>
+        <p
+          className="bold"
+        >
+          Password:
+        </p>
+        <p>
+          theW0nder!
+        </p>
+      </div>
+    </div>
+    <div
+      className="flexContainer"
+    >
+      <h4
+        className="space"
+      >
+         User Preferences 
+      </h4>
+      <div>
+        <p
+          className="bold"
+        >
+          Include Dogs:
+        </p>
+        <p>
+          sometimes
+        </p>
+      </div>
+      <div>
+        <p
+          className="bold"
+        >
+          No. of GIFs per day:
+        </p>
+        <p>
+          4
+        </p>
+      </div>
+    </div>
+  </div>
+</Confirm>
+`;

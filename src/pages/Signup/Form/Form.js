@@ -55,8 +55,7 @@ function Form() {
           { user.questionsAnswered >= user.currentlyOnQuestion && user.currentlyOnQuestion > 0 &&
             <div className={Styles.leftArrow}  onClick={()=> movePage(user,setUser, -1)}> back </div>
           }
-        {/* {question} */}
-        <Confirm/>
+        {question}
         { user.questionsAnswered < user.currentlyOnQuestion && user.currentlyOnQuestion < 3 &&
             <div className={Styles.rightArrow} onClick={()=> movePage(user,setUser,1)}> next </div>
         }
