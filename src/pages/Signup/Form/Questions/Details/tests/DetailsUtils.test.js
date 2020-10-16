@@ -4,7 +4,7 @@ import * as utils from '../Details'
 
 describe('Details form components utils', () => {
 
-    describe('#checkEmailsMatch', ()=>{
+    describe('#checkFieldsMatch', ()=>{
     
 
         it('it will return an object not containing an error if emails match', ()=>{
@@ -16,7 +16,7 @@ describe('Details form components utils', () => {
             '  <input id="emailRetype">test@gmail.com</input>' +
             '</div>';
 
-            expect(utils.checkEmailsMatch(errorsMock)).toEqual({})
+            expect(utils.checkFieldsMatch(errorsMock, {first:'email', second:'emailRetype'})).toEqual({})
         })
 
         it('it will return an object containing an error if emails do not match', ()=>{
@@ -27,7 +27,7 @@ describe('Details form components utils', () => {
             const errorsMock = {}
   
 
-            expect(utils.checkEmailsMatch(errorsMock)).toEqual({emailRetype:{error:'Email addresses do not match'}})
+            expect(utils.checkFieldsMatch(errorsMock, {first:'email', second:'emailRetype'})).toEqual({emailRetype:{error:"email's do not match"}})
         })
 
         it('if emails are typed to match it should remove the error from the errors object', ()=>{
@@ -37,9 +37,20 @@ describe('Details form components utils', () => {
                 if(val === 'email') return {value:'test@gmail.com'}
                 if(val === 'emailRetype') return {value:'test@gmail.com'}
             })  
-            expect(utils.checkEmailsMatch(errorsMock)).toEqual({})
+            expect(utils.checkFieldsMatch(errorsMock, {first:'email', second:'emailRetype'})).toEqual({})
+        })
+
+        it('if should also work for password fields', ()=>{
+            const errorsMock = {passwordRetype:{error:"password's do not match"}}
+
+            jest.spyOn(document, 'getElementById').mockImplementation((val)=>{
+                if(val === 'password') return {value:'secret'}
+                if(val === 'passwordRetype') return {value:'secret'}
+            })  
+            expect(utils.checkFieldsMatch(errorsMock, {first:'password', second:'passwordRetype'})).toEqual({})
         })
     })
+
 
     
 })

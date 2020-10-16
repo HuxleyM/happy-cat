@@ -6,21 +6,36 @@ export const handleFormSubmission = () => {
     console.log('heya i submitted')
 };
 
-export const checkEmailsMatch = (errors) => {
-      const firstEmail = document.getElementById("email").value;
-      const secondEmail = document.getElementById("emailRetype").value;
-      if (firstEmail !== secondEmail) {
-          console.log('i should come here')
-        const message = "Email addresses do not match";
-        return { ...errors, emailRetype: { error: message } };
+export const checkFieldsMatch = (errors, fields) => {
+      const first = document.getElementById(`${fields.first}`).value;
+      const second = document.getElementById(`${fields.second}`).value;
+      if (first !== second) {
+        const newErrors = {...errors}
+        newErrors[`${fields.second}`] = { error: `${fields.first}'s do not match`}
+        return newErrors
       } else {
           const current = { ...errors };
-          if(current.emailRetype){
-            delete current.emailRetype;
+          if(current[`${fields.second}`]){
+            delete current[`${fields.second}`];
           }
           return current;
       }
   };
+
+  export const checkPasswordssMatch = (errors) => {
+    const firstPassword = document.getElementById("password").value;
+    const secondPassword = document.getElementById("passwordRetype").value;
+    if (firstPassword !== secondPassword) {
+      const message = "Password do not match";
+      return { ...errors, passwordRetype: { error: message } };
+    } else {
+        const current = { ...errors };
+        if(current.passwordRetype){
+          delete current.passwordRetype;
+        }
+        return current;
+    }
+};
 
 
 
@@ -61,7 +76,7 @@ function Details(props) {
             <label htmlFor="emailRetype">Retype email:</label>
             <div>
               <input
-                onChange={checkEmailsMatch}
+  
                 type="email"
                 id="emailRetype"
                 name="emailRetype"
