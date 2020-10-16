@@ -51,6 +51,33 @@ describe('Details form components utils', () => {
         })
     })
 
+    describe('#validPassword', ()=> {
+        it('should return false if it does not match', ()=>{
+            jest.spyOn(document, 'getElementById').mockImplementation((val)=>{
+                if(val === 'password') return {value:'secret'}
+            })  
+            expect(utils.validPassword()).toEqual(false)
+        })
+
+        it('should return true if is valid', ()=>{
+            jest.spyOn(document, 'getElementById').mockImplementation((val)=>{
+                if(val === 'password') return {value:'secret1!2'}
+            })  
+            expect(utils.validPassword()).toEqual(true)
+        })
+    })
+
+    xdescribe('#handleFormSubscription', ()=>{
+
+        it('should call validPassword', ()=>{
+
+        })
+
+        it('shouldCall checkFieldMatch for password',()=>{})
+
+        it('shouldCall checkFieldMatch for email',()=>{})
+    })
+
 
     
 })

@@ -3,8 +3,21 @@ import Styles from "./Details.module.css";
 import * as utils from './Details'
 
 export const handleFormSubmission = () => {
-    console.log('heya i submitted')
+    if(validPassword()){
+        
+    }
 };
+
+export const validPassword = () => {
+    const password = document.getElementById('password').value;
+    const passwordRegex = /^(?=.*\d)(?=.*\W).{8,}$/g
+    // if (!password.match(passwordRegex)) {
+    //     return {...errors, password: 'This is not a valid password, include digits, special chars and be at least 8 digits long'}
+    // } 
+    // double here to return if theres a match or not
+    return !!password.match(passwordRegex)
+}
+
 
 export const checkFieldsMatch = (errors, fields) => {
       const first = document.getElementById(`${fields.first}`).value;
@@ -22,20 +35,7 @@ export const checkFieldsMatch = (errors, fields) => {
       }
   };
 
-  export const checkPasswordssMatch = (errors) => {
-    const firstPassword = document.getElementById("password").value;
-    const secondPassword = document.getElementById("passwordRetype").value;
-    if (firstPassword !== secondPassword) {
-      const message = "Password do not match";
-      return { ...errors, passwordRetype: { error: message } };
-    } else {
-        const current = { ...errors };
-        if(current.passwordRetype){
-          delete current.passwordRetype;
-        }
-        return current;
-    }
-};
+
 
 
 

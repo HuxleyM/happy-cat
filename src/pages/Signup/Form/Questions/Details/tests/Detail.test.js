@@ -26,7 +26,7 @@ describe('Details form components', () => {
   });
 
   it("On submit should call handle form if fields are filled", () => {
-    const handleFormSubmissionMock = jest.spyOn(utils, 'handleFormSubmission')
+    const handleFormSubmissionMock = jest.spyOn(utils, 'handleFormSubmission').mockImplementation(()=>true)
 
     form.simulate('submit', {
         preventDefault: () => {},
