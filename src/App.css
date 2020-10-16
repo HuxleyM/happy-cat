@@ -138,3 +138,7 @@ table {
 p {
   line-height: 25px;
 }
+
+label {
+  font-weight: 700;
+}

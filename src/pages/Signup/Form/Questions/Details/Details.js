@@ -1,68 +1,85 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Styles from "./Details.module.css";
 import Button from "../../../../../Components/Button/Button";
 
 function Details() {
-    const [errors, setErrors] = useState({}) 
-    const isError = ({field}) => false;
-
-
+  const [errors, setErrors] = useState({});
 
   return (
-    <div>
-      <form onSubmit={(e) => e.preventDefault()}>
-        <div className={Styles.leftSide}>
+    <form onSubmit={(e) => e.preventDefault()}>
+      <div className={Styles.flexContainer}>
+        <div>
           <div className={Styles.questionWrapper}>
-            <label for="userName">UserName:</label>
-            <input type="text" id="userName" name="userName" required></input>
-            <div>{isError({field:"userName"}) && <p>error here</p>}</div>
+            <label htmlFor="userName">User name:</label>
+            <div>
+              <input type="text" id="userName" name="userName" required></input>
+              {errors.username && <div>{errors.username.error}</div>}
+            </div>
           </div>
 
           <div className={Styles.questionWrapper}>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required></input>
-            <div>{isError({field:"email"}) && <p>error here</p>}</div>
+            <label htmlFor="email">Email:</label>
+            <div>
+              <input type="email" id="email" name="email" required></input>
+              {errors.email && <div>{errors.email.error}</div>}
+            </div>
           </div>
 
           <div className={Styles.questionWrapper}>
-            <label for="emailRetype">Retype email:</label>
-            <input
-              type="email"
-              id="emailRetype"
-              name="emailRetype"
-              required
-            ></input>
-            <div>{isError({field:"emailRetype"}) && <p>error here</p>}</div>
-          </div>
-        </div>
-
-        <div className={Styles.rightSide}>
-          <div className={Styles.questionWrapper}>
-            <label for="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              required
-            ></input>
-            <div>{isError({field:"password"}) && <p>error here</p>}</div>
-          </div>
-
-          <div className={Styles.questionWrapper}>
-            <label for="passwordRetype">Retype password::</label>
-            <input
-              type="password"
-              id="passwordRetype"
-              name="passwordRetype"
-              required
-            ></input>
-            <div>{isError({field:"passwordRetype"}) && <p>error here</p>}</div>
+            <label htmlFor="emailRetype">Retype email:</label>
+            <div>
+              <input
+                type="email"
+                id="emailRetype"
+                name="emailRetype"
+                required
+              ></input>
+              {errors.emailRetype && <div>{errors.emailRetype.error}</div>}
+            </div>
           </div>
         </div>
 
-        <input type="submit" value="Save and next"></input>
-      </form>
-    </div>
+        <div>
+          <div className={Styles.questionWrapper}>
+            <div>
+              <label htmlFor="password">Password:</label>
+              <p className={Styles.passwordInstructions}>
+                Password must contain at least 8 digits, a special character and
+                a number.
+              </p>
+            </div>
+            <div>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+              ></input>
+              {errors.password && <div>{errors.password.error}</div>}
+            </div>
+          </div>
+
+          <div className={Styles.questionWrapper}>
+            <label htmlFor="passwordRetype">Retype password:</label>
+            <div>
+              <input
+                type="password"
+                id="passwordRetype"
+                name="passwordRetype"
+                required
+              ></input>
+              <div>
+                {errors.passwordRetype && (
+                  <div>{errors.passwordRetype.error}</div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <input type="submit" value="Save and next"></input>
+    </form>
   );
 }
 

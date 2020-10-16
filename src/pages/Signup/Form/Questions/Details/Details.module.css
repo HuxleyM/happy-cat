@@ -1,6 +1,24 @@
-.leftSide {
-}
-.rightSide {
+.flexContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 70vw;
+  padding-top: 35px;
+  /* background: blue; */
 }
 .questionWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 400px;
+  margin-bottom: 30px;
+}
+.passwordInstructions {
+  margin-top: 10px;
+  font-weight: lighter;
+  font-size: 14px;
+  width: 100px;
+  line-height: 16px;
 }
