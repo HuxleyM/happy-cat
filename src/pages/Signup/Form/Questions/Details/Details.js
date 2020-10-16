@@ -1,9 +1,28 @@
 import React, { useState } from "react";
 import Styles from "./Details.module.css";
-import Button from "../../../../../Components/Button/Button";
+
+
+
 
 function Details() {
   const [errors, setErrors] = useState({});
+
+  const checkEmailsMatch = () => {
+    setTimeout(() => {
+      const firstEmail = document.getElementById("email").value;
+      const secondEmail = document.getElementById("emailRetype").value;
+      if (firstEmail !== secondEmail) {
+        const message = "Email address do not match";
+        setErrors(() => ({ ...errors, emailRetype: { error: message } }));
+      } else {
+          setErrors(()=>{
+              const current = {...errors}
+              delete current.emailRetype
+              return current
+          })
+      }
+    }, 3000);
+  };
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
@@ -29,6 +48,7 @@ function Details() {
             <label htmlFor="emailRetype">Retype email:</label>
             <div>
               <input
+              onChange={checkEmailsMatch}
                 type="email"
                 id="emailRetype"
                 name="emailRetype"

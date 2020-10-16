@@ -12,7 +12,7 @@ const selectComponent = (user) => {
 };
 
 function Signup() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const ComponentToDisplay = selectComponent(user);
 
   return (
