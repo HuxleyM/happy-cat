@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import Form from './Form';
 import Details from './Questions/Details/Details';
 import Preferences from './Questions/Preferences/Preferences';
@@ -48,7 +48,19 @@ describe('Form component', () => {
 
     describe('Navigation', ()=>{
         it('if i have answered all questions i should be able to navagate back and forth', ()=> {
+            const context = { user:{ currentlyOnQuestion:3, questionsAnswered:3}}
+            const wrapper = mount(         
+            <UserContext.Provider value={context}>
+                <Form />
+            </UserContext.Provider>,)
 
+        const movePage = jest.fn()
+        const handleClick = jest.spyOn(React, "useContext");
+        handleClick.mockImplementation(index => [index, movePage]);
+        const backButton = wrapper.find('.leftArrow')
+        const forwardButton = wrapper.find('.rightArrow')
+        backButton.simulate('click')
+        expect(movePage).toBeTruthy();
         })
 
         it('I cannot click forward if i havent answered/has errors the question', () => {

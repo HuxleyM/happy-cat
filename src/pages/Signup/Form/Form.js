@@ -53,12 +53,12 @@ function Form() {
         </div>
       </div>
       <div className={Styles.questionContainer}>
-          { user.questionsAnswered > user.currentlyOnQuestion &&
-            <div className={Styles.leftArrow} onClick={()=> movePage(user,setUser, -1)}> back </div>
+          { user.questionsAnswered >= user.currentlyOnQuestion && user.currentlyOnQuestion > 0 &&
+            <div className={Styles.leftArrow}  onClick={()=> movePage(user,setUser, -1)}> back </div>
           }
         {question}
-        {/* { user.questionsAnswered < user.currentlyOnQuestion && */}
-            <div className={Styles.RightArrow} onClick={()=> movePage(user,setUser,1)}> next </div>
+        { user.questionsAnswered < user.currentlyOnQuestion && user.currentlyOnQuestion < 3 &&
+            <div className={Styles.rightArrow} onClick={()=> movePage(user,setUser,1)}> next </div>
         }
       </div>
     </div>
