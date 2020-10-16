@@ -11,9 +11,24 @@ const questionToShow = ({currentlyOnQuestion})=>{
     return Questions[currentlyOnQuestion]
 }
 
+const goForward = (user, setUser) => {
+    setTimeout(()=>{
+        let newPage = user.currentlyOnQuestion += 1;
+        setUser({...user, currentlyOnQuestion: newPage})
+    }, 200)
+}
+
+const goBackward = (user, setUser) => {
+    setTimeout(()=>{
+        let newPage = user.currentlyOnQuestion -= 1;
+        setUser({...user, currentlyOnQuestion: newPage})
+    }, 200)
+}
+
 function Form() {
   const { user, setUser } = useContext(UserContext);
   const question = questionToShow(user)
+  console.log(user.currentlyOnQuestion)
   return (
     <div>
       <div className={Styles.addBreathingSpace}>
@@ -43,9 +58,13 @@ function Form() {
         </div>
       </div>
       <div className={Styles.questionContainer}>
-        <div className={Styles.leftArrow}> back </div>
+          { user.questionsAnswered > user.currentlyOnQuestion &&
+            <div className={Styles.leftArrow} onClick={()=> goBackward(user,setUser)}> back </div>
+          }
         {question}
-        <div className={Styles.RightArrow}> next </div>
+        { user.questionsAnswered < user.currentlyOnQuestion &&
+            <div className={Styles.RightArrow} onClick={()=> goForward(user,setUser)}> next </div>
+        }
       </div>
     </div>
   );
