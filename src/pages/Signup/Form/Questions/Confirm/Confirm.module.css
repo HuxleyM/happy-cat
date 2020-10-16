@@ -1,6 +1,8 @@
+@import "../../../../../variables.css";
+
 .header {
   padding: 36px 0px;
-  border-bottom: 3pt solid grey;
+  border-bottom: 3pt solid var(--colour-grey);
   margin-bottom: 24px;
 }
 
@@ -20,7 +22,7 @@
 .space {
   padding-bottom: 16px;
   margin-bottom: 5px;
-  border-bottom: 2pt solid grey;
+  border-bottom: 2pt solid var(--colour-grey);
 }
 .flexContainer > h4,
 .bold {
