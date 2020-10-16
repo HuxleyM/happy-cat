@@ -1,8 +1,35 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# HappyCat
 
-## Available Scripts
+HappyCat is a service that will send users a number of animal GIF's per day.
 
-In the project directory, you can run:
+# Design
+
+This is an app to use to sign up to the HappyCat service, built using React.js and tested using Jest and Enzyme.
+
+# wireframes
+
+# challenges
+
+I have not used React for over a year and a half. I had to quickly relearn the basics as well as trying to move to the new React standards and they're appropriate testing.
+
+Functional react components are awesome, however a little tough to start testing as I had problems stubbing methods within the function.
+
+State management was tricky, i looked into redux before discovering the useContext and useState hooks in React.
+
+# future of the project
+
+I'd like this project to send out a confirmational email as well as to send out the actual gif emails.
+
+I'd like to implement end to end testing with cypress but had time restraints and was unable to complete this.
+
+Finish setting up eslint.
+
+# Design
+
+## basic commands || get it running locally
+
+To run these git clone this source code, check out to the directory and then run these command in you terminal after first running
+yarn install.
 
 ### `yarn start`
 
@@ -27,23 +54,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
+<!-- ### Code Splitting
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
@@ -53,16 +64,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/an
 
 ### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app -->
 
-### Advanced Configuration
+### Notes
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

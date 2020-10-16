@@ -62,9 +62,9 @@ function Details(props) {
             if(mode === 'ADD'){
                 setErrors({...errors, passwordRetype: 'Password do not match'})
             }
-            let passwordReErrros = {...errors}
-            delete passwordReErrros.passwordReErrros
-            setErrors({...passwordReErrros})
+            let passwordReErrors = {...errors}
+            delete passwordReErrors.passwordReErrors
+            setErrors({...passwordReErrors})
 
             break
         default:
