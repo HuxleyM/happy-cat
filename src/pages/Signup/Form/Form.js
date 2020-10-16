@@ -23,7 +23,6 @@ const movePage = (user, setUser, index) => {
 function Form() {
   const { user, setUser } = useContext(UserContext);
   const question = questionToShow(user)
-  console.log(user.currentlyOnQuestion)
   return (
     <div>
       <div className={Styles.addBreathingSpace}>

@@ -20,9 +20,9 @@ describe('Details form components', () => {
     const passwordRetypeField = wrapper.find('#passwordRetype')
 
   it("On submit shouldn't call handle form if fields are empty", () => {
-    const handleFormSubmission = jest.fn()
+    const handleFormSubmissionMock = jest.spyOn(utils, 'handleFormSubmission')
     form.simulate('click')
-    expect(handleFormSubmission.mock.calls.length).toBe(0);
+    expect(handleFormSubmissionMock.mock.calls.length).toBe(0);
   });
 
   it("On submit should call handle form if fields are filled", () => {

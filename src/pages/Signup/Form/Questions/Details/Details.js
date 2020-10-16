@@ -4,29 +4,32 @@ import * as utils from './Details'
 
 export const handleFormSubmission = () => {
     console.log('heya i submitted')
+};
+
+export const checkEmailsMatch = (errors) => {
+      const firstEmail = document.getElementById("email").value;
+      const secondEmail = document.getElementById("emailRetype").value;
+      if (firstEmail !== secondEmail) {
+          console.log('i should come here')
+        const message = "Email addresses do not match";
+        return { ...errors, emailRetype: { error: message } };
+      } else {
+          const current = { ...errors };
+          if(current.emailRetype){
+            delete current.emailRetype;
+          }
+          return current;
+      }
   };
+
+
 
 
 function Details(props) {
   const [errors, setErrors] = useState({});
   const [formDetails, setFormDetails] = useState({})
 
-  const checkEmailsMatch = () => {
-    setTimeout(() => {
-      const firstEmail = document.getElementById("email").value;
-      const secondEmail = document.getElementById("emailRetype").value;
-      if (firstEmail !== secondEmail) {
-        const message = "Email address do not match";
-        setErrors(() => ({ ...errors, emailRetype: { error: message } }));
-      } else {
-        setErrors(() => {
-          const current = { ...errors };
-          delete current.emailRetype;
-          return current;
-        });
-      }
-    }, 3000);
-  };
+
 
 
   return (
