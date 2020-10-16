@@ -11,19 +11,14 @@ const questionToShow = ({currentlyOnQuestion})=>{
     return Questions[currentlyOnQuestion]
 }
 
-const goForward = (user, setUser) => {
+const movePage = (user, setUser, index) => {
     setTimeout(()=>{
-        let newPage = user.currentlyOnQuestion += 1;
+        let newPage = user.currentlyOnQuestion += index;
         setUser({...user, currentlyOnQuestion: newPage})
     }, 200)
 }
 
-const goBackward = (user, setUser) => {
-    setTimeout(()=>{
-        let newPage = user.currentlyOnQuestion -= 1;
-        setUser({...user, currentlyOnQuestion: newPage})
-    }, 200)
-}
+
 
 function Form() {
   const { user, setUser } = useContext(UserContext);
@@ -59,11 +54,11 @@ function Form() {
       </div>
       <div className={Styles.questionContainer}>
           { user.questionsAnswered > user.currentlyOnQuestion &&
-            <div className={Styles.leftArrow} onClick={()=> goBackward(user,setUser)}> back </div>
+            <div className={Styles.leftArrow} onClick={()=> movePage(user,setUser, -1)}> back </div>
           }
         {question}
-        { user.questionsAnswered < user.currentlyOnQuestion &&
-            <div className={Styles.RightArrow} onClick={()=> goForward(user,setUser)}> next </div>
+        {/* { user.questionsAnswered < user.currentlyOnQuestion && */}
+            <div className={Styles.RightArrow} onClick={()=> movePage(user,setUser,1)}> next </div>
         }
       </div>
     </div>
