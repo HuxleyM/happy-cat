@@ -128,10 +128,11 @@ table {
   border-spacing: 0;
 }
 /*---------------------------------------------- end of css reset */
-
+body {
+  background: #fafafa;
+}
 .App {
-  background: #f4f4f4;
-  min-height: 100vh;
+  height: 100%;
   font-family: "Roboto", sans-serif;
 }
 

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import Styles from "./Details.module.css";
+import * as utils from './Details'
+
+export const handleFormSubmission = () => {
+    console.log('heya i submitted')
+  };
 
 
-
-
-function Details() {
+function Details(props) {
   const [errors, setErrors] = useState({});
+  const [formDetails, setFormDetails] = useState({})
 
   const checkEmailsMatch = () => {
     setTimeout(() => {
@@ -15,17 +19,23 @@ function Details() {
         const message = "Email address do not match";
         setErrors(() => ({ ...errors, emailRetype: { error: message } }));
       } else {
-          setErrors(()=>{
-              const current = {...errors}
-              delete current.emailRetype
-              return current
-          })
+        setErrors(() => {
+          const current = { ...errors };
+          delete current.emailRetype;
+          return current;
+        });
       }
     }, 3000);
   };
 
+
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        utils.handleFormSubmission();
+      }}
+    >
       <div className={Styles.flexContainer}>
         <div>
           <div className={Styles.questionWrapper}>
@@ -48,7 +58,7 @@ function Details() {
             <label htmlFor="emailRetype">Retype email:</label>
             <div>
               <input
-              onChange={checkEmailsMatch}
+                onChange={checkEmailsMatch}
                 type="email"
                 id="emailRetype"
                 name="emailRetype"
@@ -98,7 +108,7 @@ function Details() {
         </div>
       </div>
 
-      <input type="submit" value="Save and next"></input>
+      <input type="submit" id='submitDetailsForm' value="Save and next"></input>
     </form>
   );
 }
