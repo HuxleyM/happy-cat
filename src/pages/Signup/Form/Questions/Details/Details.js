@@ -1,87 +1,92 @@
 import React, { useState, useContext } from "react";
 import Styles from "./Details.module.css";
 import * as utils from "./utils";
-import { UserContext } from '../../../../../Context/userContext';
-import InputError from '../../../../../Components/InputError/InputError'
+import { UserContext } from "../../../../../Context/userContext";
+import Button from "../../../../../Components/Button/Button";
 
 function Details(props) {
-  const {user, setUser} = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext);
   const [errors, setErrors] = useState({});
 
-  const setErrorsSwitch = ({field, mode}) =>{
-    switch(field){
-        case 'password':   
-            if(mode === 'ADD'){
-                setErrors({...errors, password: 'This is not a valid password, include digits, special chars and be at least 8 digits long'})
-            }
-            let passwordErrors = {...errors}
-            delete passwordErrors.password
-            setErrors({...passwordErrors})
-            break;
-        case 'email':
-            if(mode === 'ADD'){
-                setErrors({...errors, email: 'This is not a valid email'})
-            }
-            let emailErrors = {...errors}
-            delete emailErrors.email
-            setErrors({...emailErrors})
-            break;
-        case 'emailRetype':
-            if(mode === 'ADD'){
-                setErrors({...errors, emailRetype: 'Emails do not match'})
-            }
-            let emailRErrors = {...errors}
-            delete emailRErrors.emailRErrors
-            setErrors({...emailRErrors})
-            break
-        case 'passwordRetype':
-            if(mode === 'ADD'){
-                setErrors({...errors, passwordRetype: 'Password do not match'})
-            }
-            let passwordReErrors = {...errors}
-            delete passwordReErrors.passwordReErrors
-            setErrors({...passwordReErrors})
-            break
-        default:
-            return
-    }
-}
-  
-  const runChecks = () => {
-    if (!utils.validPassword()) setErrorsSwitch({field:'password', mode:'ADD'})
-    if (!utils.validEmail()) setErrorsSwitch({field:'email', mode:'ADD'})
-    if (!utils.checkFieldsMatch({first:'email', second:'emailRetype'})) setErrorsSwitch({field:'emailRetype', mode:'ADD'})
-    if (!utils.checkFieldsMatch({first:'password', second:'passwordRetype'})) setErrorsSwitch({field:'passwordRetype', mode:'ADD'})
-}
+  //   const setErrorsSwitch = ({field, mode}) =>{
+  //     switch(field){
+  //         case 'password':
+  //             if(mode === 'ADD'){
+  //                 setErrors({...errors, password: 'This is not a valid password, include digits, special chars and be at least 8 digits long'})
+  //             }
+  //             let passwordErrors = {...errors}
+  //             delete passwordErrors.password
+  //             setErrors({...passwordErrors})
+  //             break;
+  //         case 'email':
+  //             if(mode === 'ADD'){
+  //                 setErrors({...errors, email: 'This is not a valid email'})
+  //             }
+  //             let emailErrors = {...errors}
+  //             delete emailErrors.email
+  //             setErrors({...emailErrors})
+  //             break;
+  //         case 'emailRetype':
+  //             if(mode === 'ADD'){
+  //                 setErrors({...errors, emailRetype: 'Emails do not match'})
+  //             }
+  //             let emailRErrors = {...errors}
+  //             delete emailRErrors.emailRErrors
+  //             setErrors({...emailRErrors})
+  //             break
+  //         case 'passwordRetype':
+  //             if(mode === 'ADD'){
+  //                 setErrors({...errors, passwordRetype: 'Password do not match'})
+  //             }
+  //             let passwordReErrors = {...errors}
+  //             delete passwordReErrors.passwordReErrors
+  //             setErrors({...passwordReErrors})
+  //             break
+  //         default:
+  //             return
+  //     }
+  // }
 
-   const handleFormSubmission = (errors) => {
-    runChecks()
-    if(errors) return 
-    let userDetails = utils.collectUserDetails()
-    setUser({...user, userDetails})
-    let questionsAnswered = user.questionsAnswered += 1
-    let currentlyOnQuestion = user.currentlyOnQuestion += 1
-    setUser({...user, questionsAnswered, currentlyOnQuestion})
-};
+  //   const runChecks = () => {
+  //     if (!utils.validPassword()) setErrorsSwitch({field:'password', mode:'ADD'})
+  //     if (!utils.validEmail()) setErrorsSwitch({field:'email', mode:'ADD'})
+  //     if (!utils.checkFieldsMatch({first:'email', second:'emailRetype'})) setErrorsSwitch({field:'emailRetype', mode:'ADD'})
+  //     if (!utils.checkFieldsMatch({first:'password', second:'passwordRetype'})) setErrorsSwitch({field:'passwordRetype', mode:'ADD'})
+  // }
 
+  //    const handleFormSubmission = (errors) => {
+  //     runChecks()
+  //     if(errors) return
+  //     let userDetails = utils.collectUserDetails()
+  //     setUser({...user, userDetails})
+  //     let questionsAnswered = user.questionsAnswered += 1
+  //     let currentlyOnQuestion = user.currentlyOnQuestion += 1
+  //     setUser({...user, questionsAnswered, currentlyOnQuestion})
+  // };
 
-
- 
+  const handleFormSubmission = (e) => {
+    e.preventDefault();
+    const formElements = e.target.elements;
+    const {
+      userName,
+      password,
+      passwordRetype,
+      email,
+      emailRetype,
+    } = formElements;
+  };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleFormSubmission();
-      }}
-    >
+    <form onSubmit={handleFormSubmission}>
       <div className={Styles.flexContainer}>
         <div>
           <div className={Styles.questionWrapper}>
             <label htmlFor="userName">User name:</label>
             <div>
               <input type="text" id="userName" name="userName" required></input>
-              {!errors.username && <div className={Styles.inputError}>emails do not match</div>}
+              {!errors.username && (
+                <div className={Styles.inputError}>emails do not match</div>
+              )}
             </div>
           </div>
 
@@ -145,8 +150,9 @@ function Details(props) {
           </div>
         </div>
       </div>
-      <input type="submit" id="submitDetailsForm" value="Save and next"></input>
+      <Button state="success" text="save and next"></Button>
     </form>
-  )}
+  );
+}
 
 export default Details;

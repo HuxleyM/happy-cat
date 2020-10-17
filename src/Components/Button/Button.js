@@ -3,7 +3,7 @@ import Styles from './Button.module.css';
 
 function Button({ text, state }) {
   return (
-    <button disabled={state !== 'success'} className={`${Styles.mainActionButton} ${Styles[state]}`}>{text}</button>
+    <button type='submit' disabled={state !== 'success'} className={`${Styles.mainActionButton} ${Styles[state]}`}>{text}</button>
   );
 }
 
