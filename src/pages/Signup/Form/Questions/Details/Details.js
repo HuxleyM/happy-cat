@@ -2,12 +2,11 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";
-import Button from "../../../../../Components/Button/Button";
 
-function Details(props) {
+function Details({formProgress,setFormProgress}) {
   const { user, setUser } = useContext(UserContext);
   const [errors, setErrors] = useState({});
-  
+
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRetype, setPasswordRetype] = useState("");
@@ -20,67 +19,110 @@ function Details(props) {
   const emailField = useRef();
   const emailRetypeField = useRef();
 
-
   const handleUserNameChange = () => {
     setUserName(userNameField.current.value);
   };
 
-  const ifExistingErrorsDelete = ({key}) => {
+  const isDisabled = () => {
+
+
+    const errorAsArray = Object.keys(errors).length;
+    console.log(errorAsArray)
+
+    console.log(  userName,
+        password,
+        passwordRetype,
+        emailRetype,
+        email,
+        !errorAsArray)
+    console.log( (
+        userName &&
+        password &&
+        passwordRetype &&
+        emailRetype &&
+        email &&
+        !errorAsArray
+      ))
+
+    if (
+      userName &&
+      password &&
+      passwordRetype &&
+      emailRetype &&
+      email 
+      &&
+      !errorAsArray
+    ) {
+      return (
+        <button type="submit" className={`${Styles.mainActionButton} `}>
+          Save and next
+        </button>
+      );
+    }
+    return (
+      <button type="submit"  disabled className={`${Styles.mainActionButton} `}>
+        Save and next
+      </button>
+    );
+  };
+
+  const ifExistingErrorsDelete = ({ key }) => {
     if (errors[key]) {
-        const newErrors = { ...errors };
-        delete newErrors[key];
-        setErrors({ ...newErrors });
-      }
-  }
+      const newErrors = { ...errors };
+      delete newErrors[key];
+      setErrors({ ...newErrors });
+    }
+  };
 
   const handleEmailChange = () => {
-    setEmail(emailField.current.value);
     if (!utils.validEmail(emailField.current.value)) {
       setErrors({ ...errors, email: "This is not a valid email." });
     } else {
-        ifExistingErrorsDelete({key:'email'})
+      setEmail(emailField.current.value);
+      ifExistingErrorsDelete({ key: "email" });
     }
   };
 
   const handleEmailRetypeChange = () => {
-    setEmailRetype(emailRetypeField.current.value);
-    if (email !== emailRetype) {
+    if (emailField.current.value !== emailRetypeField.current.value) {
       setErrors({ ...errors, emailRetype: "Emails do not match." });
     } else {
-        ifExistingErrorsDelete({key:'emailRetype'})
+      setEmailRetype(emailRetypeField.current.value);
+      ifExistingErrorsDelete({ key: "emailRetype" });
     }
   };
 
   const handlePasswordChange = () => {
-    setPassword(passwordField.current.value);
     if (!utils.validPassword(passwordField.current.value)) {
       setErrors({ ...errors, password: "This is not a valid password." });
     } else {
-        ifExistingErrorsDelete({key:'password'})
+      setPassword(passwordField.current.value);
+      ifExistingErrorsDelete({ key: "password" });
     }
   };
 
   const handlePasswordRetypeChange = () => {
-    setPasswordRetype(passwordRetypeField.current.value);
-    if (password !== passwordRetype) {
+    if (passwordField.current.value !== passwordRetypeField.current.value) {
       setErrors({ ...errors, passwordRetype: "Password do not match." });
     } else {
-        ifExistingErrorsDelete({key:'Retype'})
+      setPasswordRetype(passwordRetypeField.current.value);
+      ifExistingErrorsDelete({ key: "passwordRetype" });
     }
   };
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
 
-    setUser({ ...user, userName, email, password }, () => {
-      let newQuestionedAnswered = (user.questionsAnswered += 1);
-      let newCurrentlyOn = (user.currentlyOnQuestion += 1);
-      setUser({
-        ...user,
+    setUser({ ...user, userName, email, password })
+
+    let newQuestionedAnswered = (formProgress.questionsAnswered += 1);
+    let newCurrentlyOn = (formProgress.currentlyOnQuestion += 1);
+    setFormProgress({
+        ...formProgress,
         questionsAnswered: newQuestionedAnswered,
         currentlyOnQuestion: newCurrentlyOn,
-      });
     });
+    
   };
 
   return (
@@ -95,7 +137,6 @@ function Details(props) {
                 id="userName"
                 name="userName"
                 ref={userNameField}
-                value={userName}
                 onChange={handleUserNameChange}
                 required
               ></input>
@@ -114,7 +155,6 @@ function Details(props) {
                 name="email"
                 required
                 ref={emailField}
-                value={email}
                 onChange={handleEmailChange}
               ></input>
               {errors.email && (
@@ -132,7 +172,6 @@ function Details(props) {
                 name="emailRetype"
                 ref={emailRetypeField}
                 onChange={handleEmailRetypeChange}
-                value={emailRetype}
                 required
               ></input>
               {errors.emailRetype && (
@@ -158,7 +197,6 @@ function Details(props) {
                 name="password"
                 ref={passwordField}
                 onChange={handlePasswordChange}
-                value={password}
                 required
               ></input>
               {errors.password && (
@@ -176,7 +214,6 @@ function Details(props) {
                 name="passwordRetype"
                 ref={passwordRetypeField}
                 onChange={handlePasswordRetypeChange}
-                value={passwordRetype}
                 required
               ></input>
               <div>
@@ -190,7 +227,8 @@ function Details(props) {
           </div>
         </div>
       </div>
-      <button type='submit' className={`${Styles.mainActionButton} `}>Save and next</button>
+
+      {isDisabled()}
     </form>
   );
 }

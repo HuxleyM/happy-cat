@@ -30,15 +30,15 @@ const movePage = (formProgress, setFormProgress, index) => {
         const Questions = [
         <Details
             formProgress={formProgress}
-            updateFormProgress={setFormProgress}
+            setFormProgress={setFormProgress}
         />,
         <Preferences
             formProgress={formProgress}
-            updateFormProgress={setFormProgress}
+            setFormProgress={setFormProgress}
         />,
         <Confirm
             formProgress={formProgress}
-            updateFormProgress={setFormProgress}
+            setFormProgress={setFormProgress}
         />,
         ];
         return Questions[currentlyOnQuestion];
@@ -73,22 +73,22 @@ const movePage = (formProgress, setFormProgress, index) => {
         </div>
       </div>
       <div className={Styles.questionContainer}>
-        {user.questionsAnswered >= user.currentlyOnQuestion &&
-          user.currentlyOnQuestion > 0 && (
+        {formProgress.questionsAnswered >= formProgress.currentlyOnQuestion &&
+          formProgress.currentlyOnQuestion > 0 && (
             <div
               className={Styles.leftArrow}
-              onClick={() => movePage(user, setUser, -1)}
+              onClick={() => movePage(formProgress, setFormProgress, -1)}
             >
               {" "}
               back{" "}
             </div>
           )}
         {question}
-        {user.questionsAnswered < user.currentlyOnQuestion &&
-          user.currentlyOnQuestion < 3 && (
+        {formProgress.questionsAnswered < formProgress.currentlyOnQuestion &&
+          formProgress.currentlyOnQuestion < 3 && (
             <div
               className={Styles.rightArrow}
-              onClick={() => movePage(user, setUser, 1)}
+              onClick={() => movePage(formProgress, setFormProgress, 1)}
             >
               {" "}
               next{" "}
