@@ -1,4 +1,4 @@
-import * as utils from "../Details";
+import * as utils from "../utils";
 
 describe("Details form components utils", () => {
   describe("#checkFieldsMatch", () => {

@@ -1,3 +1,5 @@
+@import "../../../../../variables.css";
+
 .flexContainer {
   display: flex;
   flex-wrap: wrap;
@@ -20,4 +22,15 @@
   font-size: 14px;
   width: 100px;
   line-height: 16px;
+}
+
+.inputError {
+  border-left: 10pt solid var(--colour-red);
+  padding-left: 8px;
+  padding-top: 5px;
+  margin-top: 8px;
+}
+
+.questionWrapper > div {
+  width: 160px;
 }

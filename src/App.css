@@ -143,3 +143,7 @@ p {
 label {
   font-weight: 700;
 }
+
+input {
+  width: 160px;
+}
