@@ -1,9 +1,11 @@
 import React from 'react';
 import Styles from './Button.module.css';
 
-function Button({ text, state }) {
+function Button({ text, disabled }) {
+
+    console.log(disabled === false, disabled)
   return (
-    <button type='submit' disabled={state !== 'success'} className={`${Styles.mainActionButton} ${Styles[state]}`}>{text}</button>
+    <button type='submit' disabled={disabled} className={`${Styles.mainActionButton} `}>{text}</button>
   );
 }
 

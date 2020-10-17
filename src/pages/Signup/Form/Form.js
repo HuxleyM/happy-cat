@@ -1,28 +1,49 @@
-import React, {useContext} from "react";
+import React, { useContext, useState } from "react";
 import Styles from "./Form.module.css";
 import { UserContext } from "../../../Context/userContext";
-import Details from './Questions/Details/Details';
-import Preferences from './Questions/Preferences/Preferences';
-import Confirm from './Questions/Confirm/Confirm'
-
-const questionToShow = ({currentlyOnQuestion})=>{
-    if(!currentlyOnQuestion && currentlyOnQuestion !== 0) return <div>Loading</div>
-    const Questions = [<Details/>,<Preferences/>,<Confirm/>]
-    return Questions[currentlyOnQuestion]
-}
-
-const movePage = (user, setUser, index) => {
-    setTimeout(()=>{
-        let newPage = user.currentlyOnQuestion += index;
-        setUser({...user, currentlyOnQuestion: newPage})
-    }, 200)
-}
+import Details from "./Questions/Details/Details";
+import Preferences from "./Questions/Preferences/Preferences";
+import Confirm from "./Questions/Confirm/Confirm";
 
 
 
 function Form() {
   const { user, setUser } = useContext(UserContext);
-  const question = questionToShow(user)
+  const [formProgress, setFormProgress] = useState({
+    questionsAnswered: 0,
+    currentlyOnQuestion: 0,
+  });
+
+
+
+const movePage = (formProgress, setFormProgress, index) => {
+    setTimeout(() => {
+      let newPage = (formProgress.currentlyOnQuestion += index);
+      setFormProgress({ ...formProgress, currentlyOnQuestion: newPage });
+    }, 200);
+  };
+
+
+  const questionToShow = ({ currentlyOnQuestion }) => {
+    if (!currentlyOnQuestion && currentlyOnQuestion !== 0)
+      return <div>Loading</div>;
+        const Questions = [
+        <Details
+            formProgress={formProgress}
+            updateFormProgress={setFormProgress}
+        />,
+        <Preferences
+            formProgress={formProgress}
+            updateFormProgress={setFormProgress}
+        />,
+        <Confirm
+            formProgress={formProgress}
+            updateFormProgress={setFormProgress}
+        />,
+        ];
+        return Questions[currentlyOnQuestion];
+    };
+  const question = questionToShow(formProgress);
   return (
     <div>
       <div className={Styles.addBreathingSpace}>
@@ -52,13 +73,27 @@ function Form() {
         </div>
       </div>
       <div className={Styles.questionContainer}>
-          { user.questionsAnswered >= user.currentlyOnQuestion && user.currentlyOnQuestion > 0 &&
-            <div className={Styles.leftArrow}  onClick={()=> movePage(user,setUser, -1)}> back </div>
-          }
+        {user.questionsAnswered >= user.currentlyOnQuestion &&
+          user.currentlyOnQuestion > 0 && (
+            <div
+              className={Styles.leftArrow}
+              onClick={() => movePage(user, setUser, -1)}
+            >
+              {" "}
+              back{" "}
+            </div>
+          )}
         {question}
-        { user.questionsAnswered < user.currentlyOnQuestion && user.currentlyOnQuestion < 3 &&
-            <div className={Styles.rightArrow} onClick={()=> movePage(user,setUser,1)}> next </div>
-        }
+        {user.questionsAnswered < user.currentlyOnQuestion &&
+          user.currentlyOnQuestion < 3 && (
+            <div
+              className={Styles.rightArrow}
+              onClick={() => movePage(user, setUser, 1)}
+            >
+              {" "}
+              next{" "}
+            </div>
+          )}
       </div>
     </div>
   );

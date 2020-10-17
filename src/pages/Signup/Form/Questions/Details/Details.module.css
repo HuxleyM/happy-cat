@@ -34,3 +34,12 @@
 .questionWrapper > div {
   width: 160px;
 }
+
+.mainActionButton {
+  color: black;
+  height: 54px;
+  width: 188px;
+  border-radius: 10px;
+  cursor: pointer;
+  border-style: none;
+}
