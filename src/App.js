@@ -3,6 +3,7 @@ import './App.css';
 import Styles from './App.module.css';
 import { UserContext } from './Context/userContext';
 import Signup from './pages/Signup/Signup';
+import ErrorBoundary from './ErrorBoundary'
 
 function App() {
   const [user, setUser] = useState({
@@ -14,6 +15,7 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={ providerValue }>
+        <ErrorBoundary>
         <header className={ Styles.mainHeader }>
           <h1>HappyCat.</h1>
         </header>
@@ -21,6 +23,7 @@ function App() {
 
           <Signup />
         </main>
+        </ErrorBoundary>
       </UserContext.Provider>
     </div>
   );

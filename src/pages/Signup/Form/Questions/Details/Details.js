@@ -5,75 +5,39 @@ import { UserContext } from "../../../../../Context/userContext";
 import Button from "../../../../../Components/Button/Button";
 
 function Details(props) {
-  const { user, setUser } = useContext(UserContext);
+//   const { user, setUser } = useContext(UserContext);
+
   const [errors, setErrors] = useState({});
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordRetype, setPasswordRetype] = useState('')
+  const [email, setEmail] = useState('')
+  const [emailRetype, setEmailRetype] = useState('')
 
-  //   const setErrorsSwitch = ({field, mode}) =>{
-  //     switch(field){
-  //         case 'password':
-  //             if(mode === 'ADD'){
-  //                 setErrors({...errors, password: 'This is not a valid password, include digits, special chars and be at least 8 digits long'})
-  //             }
-  //             let passwordErrors = {...errors}
-  //             delete passwordErrors.password
-  //             setErrors({...passwordErrors})
-  //             break;
-  //         case 'email':
-  //             if(mode === 'ADD'){
-  //                 setErrors({...errors, email: 'This is not a valid email'})
-  //             }
-  //             let emailErrors = {...errors}
-  //             delete emailErrors.email
-  //             setErrors({...emailErrors})
-  //             break;
-  //         case 'emailRetype':
-  //             if(mode === 'ADD'){
-  //                 setErrors({...errors, emailRetype: 'Emails do not match'})
-  //             }
-  //             let emailRErrors = {...errors}
-  //             delete emailRErrors.emailRErrors
-  //             setErrors({...emailRErrors})
-  //             break
-  //         case 'passwordRetype':
-  //             if(mode === 'ADD'){
-  //                 setErrors({...errors, passwordRetype: 'Password do not match'})
-  //             }
-  //             let passwordReErrors = {...errors}
-  //             delete passwordReErrors.passwordReErrors
-  //             setErrors({...passwordReErrors})
-  //             break
-  //         default:
-  //             return
-  //     }
-  // }
+ const handleUserNameChange = (event) => {
+     setUserName(event.target.value)
+ }
 
-  //   const runChecks = () => {
-  //     if (!utils.validPassword()) setErrorsSwitch({field:'password', mode:'ADD'})
-  //     if (!utils.validEmail()) setErrorsSwitch({field:'email', mode:'ADD'})
-  //     if (!utils.checkFieldsMatch({first:'email', second:'emailRetype'})) setErrorsSwitch({field:'emailRetype', mode:'ADD'})
-  //     if (!utils.checkFieldsMatch({first:'password', second:'passwordRetype'})) setErrorsSwitch({field:'passwordRetype', mode:'ADD'})
-  // }
+ const handleEmailChange = (event) => {
+    setEmail(event.target.value)
+ }
 
-  //    const handleFormSubmission = (errors) => {
-  //     runChecks()
-  //     if(errors) return
-  //     let userDetails = utils.collectUserDetails()
-  //     setUser({...user, userDetails})
-  //     let questionsAnswered = user.questionsAnswered += 1
-  //     let currentlyOnQuestion = user.currentlyOnQuestion += 1
-  //     setUser({...user, questionsAnswered, currentlyOnQuestion})
-  // };
+ const handleEmailRetypeChange = (event) => {
+    setEmailRetype(event.target.value)
+ }
+
+ const handlePasswordChange = (event) => {
+    setPassword(event.target.value)
+ }
+
+ const handlePasswordRetypeChange = (event) => {
+    setPasswordRetype(event.target.value)
+ }
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
-    const formElements = e.target.elements;
-    const {
-      userName,
-      password,
-      passwordRetype,
-      email,
-      emailRetype,
-    } = formElements;
+  
+    
   };
 
   return (
@@ -83,8 +47,8 @@ function Details(props) {
           <div className={Styles.questionWrapper}>
             <label htmlFor="userName">User name:</label>
             <div>
-              <input type="text" id="userName" name="userName" required></input>
-              {!errors.username && (
+              <input type="text" id="userName" name="userName"  value={userName} onChange={handleUserNameChange}required></input>
+              {errors.username && (
                 <div className={Styles.inputError}>emails do not match</div>
               )}
             </div>
@@ -93,7 +57,7 @@ function Details(props) {
           <div className={Styles.questionWrapper}>
             <label htmlFor="email">Email:</label>
             <div>
-              <input type="email" id="email" name="email" required></input>
+              <input type="email" id="email" name="email" required  value={email} onChange={handleEmailChange}></input>
               {errors.email && <div>{errors.email.error}</div>}
             </div>
           </div>
@@ -105,6 +69,8 @@ function Details(props) {
                 type="email"
                 id="emailRetype"
                 name="emailRetype"
+                onChange={handleEmailRetypeChange}
+                value={emailRetype}
                 required
               ></input>
               {errors.emailRetype && <div>{errors.emailRetype.error}</div>}
@@ -126,6 +92,8 @@ function Details(props) {
                 type="password"
                 id="password"
                 name="password"
+                onChange={handlePasswordChange}
+                value={password}
                 required
               ></input>
               {errors.password && <div>{errors.password.error}</div>}
@@ -139,6 +107,8 @@ function Details(props) {
                 type="password"
                 id="passwordRetype"
                 name="passwordRetype"
+                onChange={handlePasswordRetypeChange}
+                value={passwordRetype}
                 required
               ></input>
               <div>
