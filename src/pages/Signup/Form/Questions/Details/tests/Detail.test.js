@@ -4,7 +4,7 @@ import Details from '../Details'
 import { UserContext } from '../../../../../../Context/userContext';
 import * as utils from '../Details'
 
-describe('Details form components', () => {
+xdescribe('Details form components', () => {
 
     const context = { };
     const wrapper = mount(
@@ -42,6 +42,22 @@ describe('Details form components', () => {
     });
     expect(handleFormSubmissionMock).toBeCalled();
   });
+
+  it('Should check that incorrect email triggers an error', ()=> {
+    console.log(wrapper.debug())
+    // const userNameField = wrapper.find('#userName')
+    // const emailField = wrapper.find('#email')
+    // const emailRetypeField = wrapper.find('#emailRetype')
+    // const passwordField = wrapper.find('#password')
+    // const passwordRetypeField = wrapper.find('#passwordRetype')
+    
+    expect(wrapper.exists('#userName')).toEqual(true);
+    expect(wrapper.exists('#email')).toEqual(true);
+    expect(wrapper.exists('#emailRetype')).toEqual(true);
+    expect(wrapper.exists('#password')).toEqual(true);
+    expect(wrapper.exists('#passwordRetype')).toEqual(true);
+})
+
 
 
 });
