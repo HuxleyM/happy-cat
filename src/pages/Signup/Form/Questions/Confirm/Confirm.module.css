@@ -36,3 +36,12 @@
 .flexContainer > div {
   margin: 10px 0px;
 }
+
+.mainActionButton {
+  background-color: var(--colour-blue);
+  height: 54px;
+  width: 188px;
+  border-radius: 10px;
+  cursor: pointer;
+  border-style: none;
+}

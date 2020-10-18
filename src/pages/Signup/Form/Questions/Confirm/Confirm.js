@@ -4,13 +4,9 @@ import Styles from "./Confirm.module.css";
 
 function Confirm() {
   const { user, setUser } = useContext(UserContext);
-  const { userDetails, userPreference } = user;
-  console.log('user', user)
-  console.log(userDetails)
-    useEffect(()=>{
-        
-    })
-
+  const submitForm = () => {
+      setUser({...user, completed:true})
+  }
   return (
     <div>
       <div className={Styles.header}>
@@ -24,28 +20,35 @@ function Confirm() {
         <h4 className={Styles.space}> UserDetails </h4>
         <div>
           <p className={Styles.bold}>User name:</p>
-          <p>{user.userDetails.userName}</p>
+          <p>{user.userName}</p>
         </div>
         <div>
           <p className={Styles.bold}>Email:</p>
-          <p>{userDetails.email}</p>
+          <p>{user.email}</p>
         </div>
         <div>
           <p className={Styles.bold}>Password:</p>
-          <p>{userDetails.password}</p>
+          <p>{user.password}</p>
         </div>
       </div>
       <div className={Styles.flexContainer}>
         <h4 className={Styles.space}> User Preferences </h4>
         <div>
           <p className={Styles.bold}>Include Dogs:</p>
-          <p>{userPreference.allowDogs}</p>
+          <p>{user.dogsAllowed}</p>
         </div>
         <div>
           <p className={Styles.bold}>No. of GIFs per day:</p>
-          <p>{userPreference.gifRate}</p>
+          <p>{user.gifRate}</p>
         </div>
       </div>
+      <button
+        type="submit"
+        className={`${Styles.mainActionButton}`}
+        onClick={submitForm}
+      >
+        Save and next
+      </button>
     </div>
   );
 }

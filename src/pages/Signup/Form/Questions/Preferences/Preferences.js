@@ -10,6 +10,7 @@ function Preferences({ formProgress, setFormProgress }) {
   const [gifRate, setGifRate] = useState("");
 
   const dogOptions = [
+    { id: "0", text: "Unselected"},
     { id: "1", text: "Never" },
     { id: "2", text: "Some Times" },
     { id: "3", text: "Often" },
@@ -17,10 +18,21 @@ function Preferences({ formProgress, setFormProgress }) {
 
   const dogsAllowedField = useRef();
   const gifRateField = useRef();
+
+  const handleDogsAllowedChange = (e) => {
+      const value = e.target.value
+      if(value !== 'Unselected'){
+        setDogsAllowed(e.target.value)
+        ifExistingErrorsDelete({key:'dogsAllowed'})
+      }else{
+          setErrors({dogsAllowed:'Please select option.'})
+      }
+
+  }
   const isDisabled = () => {
     const errorAsArray = Object.keys(errors).length;
-
-    if (dogsAllowed && gifRateField && !errorAsArray) {
+    console.log(dogsAllowed, gifRate)
+    if (dogsAllowed && gifRate && !errorAsArray) {
       return (
         <button type="submit" className={`${Styles.mainActionButton} `}>
           Save and next
@@ -33,9 +45,40 @@ function Preferences({ formProgress, setFormProgress }) {
       </button>
     );
   };
-  const handleDogsAllowedChange = () => {};
-  const handleGifRateChange = () => {};
-  const handleFormSubmission = () => {};
+
+  const ifExistingErrorsDelete = ({ key }) => {
+    if (errors[key]) {
+      const newErrors = { ...errors };
+      delete newErrors[key];
+      setErrors({ ...newErrors });
+    }
+  };
+
+  const handleGifRateChange = () => {
+      if(gifRateField.current.value > 0 && gifRateField.current.value <= 10){
+          setGifRate(gifRateField.current.value)
+          ifExistingErrorsDelete({key:'gifRate'})
+      } else {
+          setErrors({gifRate:'This is an invalid GIF rate'})
+      }
+  };
+  const handleFormSubmission = (e) => {
+    e.preventDefault();
+    if(!dogsAllowed){
+        setErrors({...errors, dogsAllowed:'Select wether dogs are allowed'})
+        return
+    }
+    setUser({ ...user, gifRate, dogsAllowed });
+
+    let newQuestionedAnswered = (formProgress.questionsAnswered += 1);
+    let newCurrentlyOn = (formProgress.currentlyOnQuestion += 1);
+    setFormProgress({
+      ...formProgress,
+      questionsAnswered: newQuestionedAnswered,
+      currentlyOnQuestion: newCurrentlyOn,
+    });
+
+  };
   return (
     <form onSubmit={handleFormSubmission}>
       <div className={Styles.flexContainer}>
