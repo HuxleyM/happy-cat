@@ -54,7 +54,7 @@ function Preferences({ handleFormSubmission }) {
           }
         : { error: false, key: "gifRate" };
     errorsReducer(errors, reducerProps);
-    setAnswers({ ...answers, gifRateField: gifRateField.current.value });
+    setAnswers({ ...answers, gifRate: gifRateField.current.value });
   };
 
   const handleDogsAllowedChange = (e) => {
