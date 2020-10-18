@@ -2,38 +2,23 @@ import React, { useState, useContext, useRef, useReducer } from "react";
 import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-function reducer(state, action){
-    switch (action.type){
-        case "userName":
-            state[action.type] = action.value
-            return state
-        case "password":
-        case "passwordRetype":
-        case "email":
-        case "emailRetype":
-    }
-
-}
-
-const updateState = (state, action) => {
-    state[action.type] = action.value
-    return state
+function errorsReducer(state, { key, error, message = "" }) {
+  if (error) {
+    state[key] = message;
+  } else {
+    delete state[key];
+  }
+  return state;
 }
 
 function Details({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
-  const [errors, setErrors] = useState({});
-  const [answers, setAnswers]= useReducer(reducer, {})
-
-//   const [userName, setUserName] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [passwordRetype, setPasswordRetype] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [emailRetype, setEmailRetype] = useState("");
-//   const [passwordShown, setPasswordShown] = useState(false);
+  const [errors, setErrors] = useReducer(errorsReducer, {});
+  const [answers, setAnswers] = useState({});
+  const [passwordShown, setPasswordShown] = useState(false);
 
   const userNameField = useRef();
   const passwordField = useRef();
@@ -44,83 +29,80 @@ function Details({ handleFormSubmission }) {
   /// i d love to tidy this but do not know how to
   const isDisabled = () => {
     const errorAsArray = Object.keys(errors).length;
-
-    if (
-      answers.userName &&
-      answers.password &&
-      answers.passwordRetype &&
-      answers.emailRetype &&
-      answers.email &&
-      !errorAsArray
-    ) {
-      return (
-        <button type="submit" className={`${Styles.mainActionButton} `}>
-          Save and next
-        </button>
-      );
-    }
+    const answersAsArray = Object.keys(answers).length;
+    // disbaled needs false flag to disable and true to not 
+    const usable = (errorAsArray === 0 && answersAsArray === 5) ? false : true;
+  
     return (
-      <button type="submit" disabled className={`${Styles.mainActionButton} `}>
+      <button
+        type="submit"
+        disabled={usable}
+        className={`${Styles.mainActionButton} `}
+      >
         Save and next
       </button>
     );
   };
 
-  const ifExistingErrorsDelete = ({ key }) => {
-    if (errors[key]) {
-      const newErrors = { ...errors };
-      delete newErrors[key];
-      setErrors({ ...newErrors });
-    }
-  };
-
-  // ---------------------------------------------------------------------- handle changes 
+  // ---------------------------------------------------------------------- handle changes
   const handleUserNameChange = () => {
-    setAnswers({...answers, userName: userNameField.current.value});
+    setAnswers({ ...answers, userName: userNameField.current.value });
   };
 
   const handleEmailChange = () => {
-    if (!utils.validEmail(emailField.current.value)) {
-      setErrors({ ...errors, email: "This is not a valid email." });
-    } else {
-      setAnswers({...answers, email: emailField.current.value});
-      ifExistingErrorsDelete({ key: "email" });
-    }
+    const reducerProps = !utils.validEmail(emailField.current.value)
+      ? { error: true, key: "email", message: "This is not a valid email." }
+      : { error: false, key: "email" };
+    errorsReducer(errors, reducerProps);
+    setAnswers({ ...answers, email: emailField.current.value });
   };
 
   const handleEmailRetypeChange = () => {
-    if (emailField.current.value !== emailRetypeField.current.value) {
-      setErrors({ ...errors, emailRetype: "Emails do not match." });
-    } else {
-        setAnswers({...answers,emailRetype:emailRetypeField.current.value});
-      ifExistingErrorsDelete({ key: "emailRetype" });
-    }
+    const reducerProps =
+      emailField.current.value !== emailRetypeField.current.value
+        ? { error: true, key: "emailRetype", message: "Emails do not match." }
+        : { error: false, key: "emailRetype" };
+    errorsReducer(errors, reducerProps);
+    setAnswers({ ...answers, emailRetype: emailRetypeField.current.value });
   };
 
   const handlePasswordChange = () => {
-    if (!utils.validPassword(passwordField.current.value)) {
-      setErrors({ ...errors, password: "This is not a valid password." });
-    } else {
-      setAnswers(passwordField.current.value);
-      ifExistingErrorsDelete({ key: "password" });
-    }
+    const reducerProps = !utils.validPassword(passwordField.current.value)
+      ? {
+          error: true,
+          key: "password",
+          message: "This is not a valid password.",
+        }
+      : { error: false, key: "password" };
+    errorsReducer(errors, reducerProps);
+    setAnswers({ ...answers, password: passwordField.current.value });
   };
 
   const handlePasswordRetypeChange = () => {
-    if (passwordField.current.value !== passwordRetypeField.current.value) {
-      setErrors({ ...errors, passwordRetype: "Password do not match." });
-    } else {
-      setAnswers({...answers, passwordRetype:passwordRetypeField.current.value});
-      ifExistingErrorsDelete({ key: "passwordRetype" });
-    }
+    const reducerProps =
+      passwordField.current.value !== passwordRetypeField.current.value
+        ? {
+            error: true,
+            key: "passwordRetype",
+            message: "Password do not match.",
+          }
+        : { error: false, key: "passwordRetype" };
+    errorsReducer(errors, reducerProps);
+    setAnswers({
+      ...answers,
+      passwordRetype: passwordRetypeField.current.value,
+    });
   };
 
-
   // on change happens every click safe to assume this is working
-  const detailsAnswers = () => setUser({ ...user, userName, email, password });
+  const detailsAnswers = () => {
+    const { userName, email, password } = answers;
+    setUser({ ...user, userName, email, password });
+  };
 
-  const togglePasswordVisiblity = () => setPasswordShown(passwordShown ? false : true);
- 
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
 
   return (
     <form
@@ -190,7 +172,10 @@ function Details({ handleFormSubmission }) {
           <div className={Styles.questionWrapper}>
             <div>
               <label htmlFor="password">Password:</label>
-              <span className={Styles.passwordVisibility} onClick={()=> togglePasswordVisiblity()}>
+              <span
+                className={Styles.passwordVisibility}
+                onClick={() => togglePasswordVisiblity()}
+              >
                 <FontAwesomeIcon icon={passwordShown ? faEye : faEyeSlash} />
               </span>
               <p className={Styles.passwordInstructions}>
@@ -237,9 +222,7 @@ function Details({ handleFormSubmission }) {
           </div>
         </div>
       </div>
-      <div className={Styles.moveToEnd}>
-        {isDisabled()}
-      </div>
+      <div className={Styles.moveToEnd}>{isDisabled()}</div>
     </form>
   );
 }

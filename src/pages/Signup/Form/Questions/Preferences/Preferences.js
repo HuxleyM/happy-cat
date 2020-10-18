@@ -2,12 +2,19 @@ import React, { useState, useContext, useRef } from "react";
 import Styles from "./Preferences.module.css";
 import { UserContext } from "../../../../../Context/userContext";
 
+function errorsReducer(state, { key, error, message = "" }) {
+  if (error) {
+    state[key] = message;
+  } else {
+    delete state[key];
+  }
+  return state;
+}
+
 function Preferences({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
   const [errors, setErrors] = useState({});
-
-  const [dogsAllowed, setDogsAllowed] = useState("");
-  const [gifRate, setGifRate] = useState("");
+  const [answers, setAnswers] = useState("");
 
   const dogOptions = [
     { id: "0", text: "Unselected" },
@@ -19,27 +26,19 @@ function Preferences({ handleFormSubmission }) {
   const dogsAllowedField = useRef();
   const gifRateField = useRef();
 
-  const handleDogsAllowedChange = (e) => {
-    const value = e.target.value;
-    if (value !== "Unselected") {
-      setDogsAllowed(e.target.value);
-      ifExistingErrorsDelete({ key: "dogsAllowed" });
-    } else {
-      setErrors({ dogsAllowed: "Please select option." });
-    }
-  };
+  /// i d love to tidy this but do not know how to
   const isDisabled = () => {
     const errorAsArray = Object.keys(errors).length;
-    console.log(dogsAllowed, gifRate);
-    if (dogsAllowed && gifRate && !errorAsArray) {
-      return (
-        <button type="submit" className={`${Styles.mainActionButton} `}>
-          Save and next
-        </button>
-      );
-    }
+    const answersAsArray = Object.keys(answers).length;
+    // disbaled needs false flag to disable and true to not
+    const usable = errorAsArray === 0 && answersAsArray === 5 ? false : true;
+
     return (
-      <button type="submit" disabled className={`${Styles.mainActionButton} `}>
+      <button
+        type="submit"
+        disabled={usable}
+        className={`${Styles.mainActionButton} `}
+      >
         Save and next
       </button>
     );
@@ -54,13 +53,29 @@ function Preferences({ handleFormSubmission }) {
   };
 
   const handleGifRateChange = () => {
-    if (gifRateField.current.value > 0 && gifRateField.current.value <= 10) {
-      setGifRate(gifRateField.current.value);
-      ifExistingErrorsDelete({ key: "gifRate" });
-    } else {
-      setErrors({ gifRate: "This is an invalid GIF rate" });
-    }
+    const reducerProps =
+      gifRateField.current.value < 0 || gifRateField.current.value >= 10
+        ? {
+            error: true,
+            key: "gifRate",
+            message: "This is an invalid GIF rate",
+          }
+        : { error: false, key: "gifRate" };
+    errorsReducer(errors, reducerProps);
+    setGifRate(gifRateField.current.value);
   };
+
+  const handleDogsAllowedChange = (e) => {
+    const value = e.target.value;
+    const reducerProps =
+      value === "Unselected"
+        ? { error: true, key: "dogsAllowed", message: "Please select option." }
+        : { error: false, key: "dogsAllowed" };
+    errorsReducer(errors, reducerProps);
+
+    setAnswers({ ...answers, dogsAllowed: e.target.value });
+  };
+
   const preferenceAnswers = () => {
     if (!dogsAllowed) {
       setErrors({ ...errors, dogsAllowed: "Select wether dogs are allowed" });
@@ -71,7 +86,8 @@ function Preferences({ handleFormSubmission }) {
   return (
     <form
       onSubmit={(event) => {
-        event.preventDefault(); handleFormSubmission(preferenceAnswers);
+        event.preventDefault();
+        handleFormSubmission(preferenceAnswers);
       }}
     >
       <div className={Styles.flexContainer}>
@@ -120,9 +136,7 @@ function Preferences({ handleFormSubmission }) {
           </div>
         </div>
       </div>
-      <div className={Styles.moveToEnd}>
-        {isDisabled()}
-      </div>
+      <div className={Styles.moveToEnd}>{isDisabled()}</div>
     </form>
   );
 }
