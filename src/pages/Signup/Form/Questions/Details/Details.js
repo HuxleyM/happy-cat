@@ -97,7 +97,7 @@ function Details({ handleFormSubmission }) {
 
   return (
     <form onSubmit={(event)=>{
-        event.preventDefault(),
+        event.preventDefault();
         handleFormSubmission(detailsAnswers)
     }}>
       <div className={Styles.flexContainer}>

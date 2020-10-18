@@ -71,7 +71,7 @@ function Preferences({ handleFormSubmission }) {
   return (
     <form
       onSubmit={(event) => {
-        event.preventDefault(), handleFormSubmission(preferenceAnswers);
+        event.preventDefault(); handleFormSubmission(preferenceAnswers);
       }}
     >
       <div className={Styles.flexContainer}>
