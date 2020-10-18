@@ -4,6 +4,7 @@ import { UserContext } from "../../../Context/userContext";
 import Details from "./Questions/Details/Details";
 import Preferences from "./Questions/Preferences/Preferences";
 import Confirm from "./Questions/Confirm/Confirm";
+import NavBar from "./NavBar/NavBar"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowAltCircleRight,
@@ -57,13 +58,7 @@ function Form() {
       <div className={Styles.addBreathingSpace}>
         <div className={Styles.headerWrapper}>
           <h2 className={Styles.header}>SignUp</h2>
-          <nav className={Styles.navBar}>
-            <ul>
-              <li>Details</li>
-              <li>Preferences</li>
-              <li>Confirm</li>
-            </ul>
-          </nav>
+          <NavBar formProgress={formProgress}/>
         </div>
         <div>
           <p>

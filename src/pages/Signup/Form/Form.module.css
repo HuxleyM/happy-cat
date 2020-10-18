@@ -1,12 +1,5 @@
 @import "../../../variables.css";
 
-.navBar > ul > li {
-  display: inline-block;
-  padding: 5px;
-  margin-right: 10px;
-  border-bottom: 3pt solid var(--colour-grey);
-}
-
 .header {
   font-size: 28px;
   font-weight: 700;

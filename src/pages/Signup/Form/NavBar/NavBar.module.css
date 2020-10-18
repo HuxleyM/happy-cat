@@ -1,0 +1,19 @@
+@import "../../../../variables.css";
+
+.navBar > ul > li {
+  display: inline-block;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.incomplete {
+  border-bottom: 3pt solid var(--colour-grey);
+}
+
+.currentlyOn {
+  border-bottom: 3pt solid var(--colour-blue);
+}
+
+.completed {
+  border-bottom: 3pt solid var(--colour-green);
+}
