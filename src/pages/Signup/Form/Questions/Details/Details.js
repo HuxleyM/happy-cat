@@ -138,8 +138,11 @@ function Details({formProgress,setFormProgress}) {
                 name="userName"
                 ref={userNameField}
                 onChange={handleUserNameChange}
+                value={user.userName}
                 required
-              ></input>
+              >
+                  
+              </input>
               {errors.username && (
                 <div className={Styles.inputError}>emails do not match</div>
               )}
@@ -155,6 +158,7 @@ function Details({formProgress,setFormProgress}) {
                 name="email"
                 required
                 ref={emailField}
+                value={user.email}
                 onChange={handleEmailChange}
               ></input>
               {errors.email && (
@@ -171,6 +175,7 @@ function Details({formProgress,setFormProgress}) {
                 id="emailRetype"
                 name="emailRetype"
                 ref={emailRetypeField}
+                value={user.email}
                 onChange={handleEmailRetypeChange}
                 required
               ></input>
@@ -196,6 +201,7 @@ function Details({formProgress,setFormProgress}) {
                 id="password"
                 name="password"
                 ref={passwordField}
+                value={user.password}
                 onChange={handlePasswordChange}
                 required
               ></input>
@@ -213,6 +219,7 @@ function Details({formProgress,setFormProgress}) {
                 id="passwordRetype"
                 name="passwordRetype"
                 ref={passwordRetypeField}
+                value={user.password}
                 onChange={handlePasswordRetypeChange}
                 required
               ></input>

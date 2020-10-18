@@ -84,7 +84,7 @@ const movePage = (formProgress, setFormProgress, index) => {
             </div>
           )}
         {question}
-        {formProgress.questionsAnswered < formProgress.currentlyOnQuestion &&
+        {formProgress.questionsAnswered > formProgress.currentlyOnQuestion &&
           formProgress.currentlyOnQuestion < 3 && (
             <div
               className={Styles.rightArrow}

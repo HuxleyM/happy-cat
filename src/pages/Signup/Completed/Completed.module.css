@@ -1,0 +1,50 @@
+@import "../../../variables.css";
+.header {
+  font-size: 28px;
+  font-weight: 700;
+  margin-right: 100px;
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.addBreathingSpace {
+  padding-bottom: 24px;
+  border-bottom: 3pt solid var(--colour-grey);
+  margin-bottom: 8px;
+}
+
+.questionContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.flexContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-bottom: 24px;
+}
+
+.image {
+  margin-right: 20px;
+  height: 60vh;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.cat1 {
+  background-image: url("../../../assets/catGif.gif");
+}
+
+@media only screen and (max-width: 600px) {
+  .image {
+    background-size: contain;
+  }
+}
