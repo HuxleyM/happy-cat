@@ -4,12 +4,17 @@ import { UserContext } from "../../../Context/userContext";
 import Details from "./Questions/Details/Details";
 import Preferences from "./Questions/Preferences/Preferences";
 import Confirm from "./Questions/Confirm/Confirm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowAltCircleRight,
+  faArrowAltCircleLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Form() {
   const { user, setUser } = useContext(UserContext);
   const [formProgress, setFormProgress] = useState({
-    questionsAnswered: 0,
-    currentlyOnQuestion: 0,
+    questionsAnswered: 1,
+    currentlyOnQuestion: 1,
   });
 
   const movePage = (formProgress, setFormProgress, index) => {
@@ -79,22 +84,26 @@ function Form() {
         {formProgress.questionsAnswered >= formProgress.currentlyOnQuestion &&
           formProgress.currentlyOnQuestion > 0 && (
             <div
-              className={Styles.leftArrow}
+              className={Styles.arrow}
               onClick={() => movePage(formProgress, setFormProgress, -1)}
             >
-              {" "}
-              back{" "}
+              <FontAwesomeIcon
+                icon={faArrowAltCircleLeft}
+                style={{ color: "#c4c4c4" }}
+              />
             </div>
           )}
         {question}
         {formProgress.questionsAnswered > formProgress.currentlyOnQuestion &&
           formProgress.currentlyOnQuestion < 3 && (
             <div
-              className={Styles.rightArrow}
+              className={Styles.arrow}
               onClick={() => movePage(formProgress, setFormProgress, 1)}
             >
-              {" "}
-              next{" "}
+              <FontAwesomeIcon
+                icon={faArrowAltCircleRight}
+                style={{ color: "#c4c4c4" }}
+              />
             </div>
           )}
       </div>

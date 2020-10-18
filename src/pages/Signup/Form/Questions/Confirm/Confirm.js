@@ -28,6 +28,7 @@ function Confirm() {
         </div>
         <div>
           <p className={Styles.bold}>Password:</p>
+          <p>I'd never dispaly this to a user just wanted to show it worked</p>
           <p>{user.password}</p>
         </div>
       </div>
