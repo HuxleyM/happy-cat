@@ -3,7 +3,7 @@ import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";
 
-function Details({formProgress,setFormProgress}) {
+function Details({ formProgress, setFormProgress }) {
   const { user, setUser } = useContext(UserContext);
   const [errors, setErrors] = useState({});
 
@@ -24,33 +24,14 @@ function Details({formProgress,setFormProgress}) {
   };
 
   const isDisabled = () => {
-
-
     const errorAsArray = Object.keys(errors).length;
-    console.log(errorAsArray)
-
-    console.log(  userName,
-        password,
-        passwordRetype,
-        emailRetype,
-        email,
-        !errorAsArray)
-    console.log( (
-        userName &&
-        password &&
-        passwordRetype &&
-        emailRetype &&
-        email &&
-        !errorAsArray
-      ))
 
     if (
       userName &&
       password &&
       passwordRetype &&
       emailRetype &&
-      email 
-      &&
+      email &&
       !errorAsArray
     ) {
       return (
@@ -60,7 +41,7 @@ function Details({formProgress,setFormProgress}) {
       );
     }
     return (
-      <button type="submit"  disabled className={`${Styles.mainActionButton} `}>
+      <button type="submit" disabled className={`${Styles.mainActionButton} `}>
         Save and next
       </button>
     );
@@ -113,16 +94,15 @@ function Details({formProgress,setFormProgress}) {
   const handleFormSubmission = (e) => {
     e.preventDefault();
 
-    setUser({ ...user, userName, email, password })
+    setUser({ ...user, userName, email, password });
 
     let newQuestionedAnswered = (formProgress.questionsAnswered += 1);
     let newCurrentlyOn = (formProgress.currentlyOnQuestion += 1);
     setFormProgress({
-        ...formProgress,
-        questionsAnswered: newQuestionedAnswered,
-        currentlyOnQuestion: newCurrentlyOn,
+      ...formProgress,
+      questionsAnswered: newQuestionedAnswered,
+      currentlyOnQuestion: newCurrentlyOn,
     });
-    
   };
 
   return (
@@ -140,9 +120,7 @@ function Details({formProgress,setFormProgress}) {
                 onChange={handleUserNameChange}
                 value={user.userName}
                 required
-              >
-                  
-              </input>
+              ></input>
               {errors.username && (
                 <div className={Styles.inputError}>emails do not match</div>
               )}

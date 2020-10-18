@@ -1,37 +1,60 @@
-import React,{useState,useContext, useRef} from "react";
-import Styles from './Preferences.module.css'
+import React, { useState, useContext, useRef } from "react";
+import Styles from "./Preferences.module.css";
 import { UserContext } from "../../../../../Context/userContext";
 
+function Preferences({ formProgress, setFormProgress }) {
+  const { user, setUser } = useContext(UserContext);
+  const [errors, setErrors] = useState({});
 
-function Preferences({formProgress,setFormProgress}) {
-    const { user, setUser } = useContext(UserContext);
-    const [errors, setErrors] = useState({});
-
-    const [dogsAllowed, setDogsAllowed] = useState("");
+  const [dogsAllowed, setDogsAllowed] = useState("");
   const [gifRate, setGifRate] = useState("");
 
-  const dogsAllowedField = useRef()
-  const gifRateField = useRef()
-  const isDisabled = () => {}
-  const handleDogsAllowedChange = ()=>{}
-  const handleGifRateChange = () => {}
-  const handleFormSubmission = () => {}
+  const dogOptions = [
+    { id: "1", text: "Never" },
+    { id: "2", text: "Some Times" },
+    { id: "3", text: "Often" },
+  ];
+
+  const dogsAllowedField = useRef();
+  const gifRateField = useRef();
+  const isDisabled = () => {
+    const errorAsArray = Object.keys(errors).length;
+
+    if (dogsAllowed && gifRateField && !errorAsArray) {
+      return (
+        <button type="submit" className={`${Styles.mainActionButton} `}>
+          Save and next
+        </button>
+      );
+    }
+    return (
+      <button type="submit" disabled className={`${Styles.mainActionButton} `}>
+        Save and next
+      </button>
+    );
+  };
+  const handleDogsAllowedChange = () => {};
+  const handleGifRateChange = () => {};
+  const handleFormSubmission = () => {};
   return (
     <form onSubmit={handleFormSubmission}>
       <div className={Styles.flexContainer}>
         <div>
           <div className={Styles.questionWrapper}>
-            <label htmlFor="userName">User name:</label>
+            <label htmlFor="dogsAllowed">Dogs allowed:</label>
             <div>
-              <input
-                type="text"
-                id="userName"
-                name="userName"
+              <select
+                id="dogsAllowed"
+                name="dogsAllowed"
                 ref={dogsAllowedField}
                 onChange={handleDogsAllowedChange}
                 value={user.dogsAllowed}
                 required
-              ></input>
+              >
+                {dogOptions.map((option) => (
+                  <option key={option.id} value={option.text}>{option.text}</option>
+                ))}
+              </select>
               {errors.dogsAllowed && (
                 <div className={Styles.inputError}>emails do not match</div>
               )}
@@ -39,12 +62,14 @@ function Preferences({formProgress,setFormProgress}) {
           </div>
 
           <div className={Styles.questionWrapper}>
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="gifRate">No. GIF's a day:</label>
             <div>
               <input
-                type="email"
-                id="email"
-                name="email"
+                min="1"
+                max="10"
+                type="number"
+                id="gifRate"
+                name="gifRate"
                 required
                 ref={gifRateField}
                 value={user.gifRate}
