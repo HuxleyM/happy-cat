@@ -34,6 +34,9 @@
 .questionWrapper > div {
   width: 160px;
 }
+.passwordVisibility {
+  margin-left: 8px;
+}
 
 .mainActionButton {
   background-color: var(--colour-blue);

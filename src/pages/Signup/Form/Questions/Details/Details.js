@@ -2,6 +2,8 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function Details({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
@@ -12,6 +14,7 @@ function Details({ handleFormSubmission }) {
   const [passwordRetype, setPasswordRetype] = useState("");
   const [email, setEmail] = useState("");
   const [emailRetype, setEmailRetype] = useState("");
+  const [passwordShown, setPasswordShown] = useState(false);
 
   const userNameField = useRef();
   const passwordField = useRef();
@@ -95,11 +98,18 @@ function Details({ handleFormSubmission }) {
     setUser({ ...user, userName, email, password });
   };
 
+  const togglePasswordVisiblity = () => {
+    console.log('hello')
+    setPasswordShown(passwordShown ? false : true);
+  };
+
   return (
-    <form onSubmit={(event)=>{
+    <form
+      onSubmit={(event) => {
         event.preventDefault();
-        handleFormSubmission(detailsAnswers)
-    }}>
+        handleFormSubmission(detailsAnswers);
+      }}
+    >
       <div className={Styles.flexContainer}>
         <div>
           <div className={Styles.questionWrapper}>
@@ -161,6 +171,9 @@ function Details({ handleFormSubmission }) {
           <div className={Styles.questionWrapper}>
             <div>
               <label htmlFor="password">Password:</label>
+              <span className={Styles.passwordVisibility} onClick={()=> togglePasswordVisiblity()}>
+                <FontAwesomeIcon icon={passwordShown ? faEye : faEyeSlash} />
+              </span>
               <p className={Styles.passwordInstructions}>
                 Password must contain at least 8 digits, a special character and
                 a number.
@@ -168,7 +181,7 @@ function Details({ handleFormSubmission }) {
             </div>
             <div>
               <input
-                type="password"
+                type={passwordShown ? "text" : "password"}
                 id="password"
                 name="password"
                 ref={passwordField}
@@ -186,7 +199,7 @@ function Details({ handleFormSubmission }) {
             <label htmlFor="passwordRetype">Retype password:</label>
             <div>
               <input
-                type="password"
+                type={passwordShown ? "text" : "password"}
                 id="passwordRetype"
                 name="passwordRetype"
                 ref={passwordRetypeField}
