@@ -31,7 +31,7 @@ function Preferences({ handleFormSubmission }) {
     const errorAsArray = Object.keys(errors).length;
     const answersAsArray = Object.keys(answers).length;
     // disbaled needs false flag to disable and true to not
-    const usable = errorAsArray === 0 && answersAsArray === 5 ? false : true;
+    const usable = errorAsArray === 0 && answersAsArray === 2 ? false : true;
 
     return (
       <button
@@ -42,14 +42,6 @@ function Preferences({ handleFormSubmission }) {
         Save and next
       </button>
     );
-  };
-
-  const ifExistingErrorsDelete = ({ key }) => {
-    if (errors[key]) {
-      const newErrors = { ...errors };
-      delete newErrors[key];
-      setErrors({ ...newErrors });
-    }
   };
 
   const handleGifRateChange = () => {
@@ -116,7 +108,7 @@ function Preferences({ handleFormSubmission }) {
                 ))}
               </select>
               {errors.dogsAllowed && (
-                <div className={Styles.inputError}>emails do not match</div>
+                <div className={Styles.inputError}>{errors.dogsAllowed}</div>
               )}
             </div>
           </div>
@@ -136,7 +128,7 @@ function Preferences({ handleFormSubmission }) {
                 onChange={handleGifRateChange}
               ></input>
               {errors.gifRate && (
-                <div className={Styles.inputError}>{errors.email}</div>
+                <div className={Styles.inputError}>{errors.gifRate}</div>
               )}
             </div>
           </div>

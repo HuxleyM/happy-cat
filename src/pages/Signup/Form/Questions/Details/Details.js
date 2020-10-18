@@ -27,12 +27,16 @@ function Details({ handleFormSubmission }) {
   const emailRetypeField = useRef();
 
   /// i d love to tidy this but do not know how to
+  // this can be its own componenet - ran out of time
   const isDisabled = () => {
     const errorAsArray = Object.keys(errors).length;
     const answersAsArray = Object.keys(answers).length;
-    // disbaled needs false flag to disable and true to not 
+    // disbaled needs false flag to disable and
+
+    console.log(answersAsArray)
     const usable = (errorAsArray === 0 && answersAsArray === 5) ? false : true;
-  
+
+
     return (
       <button
         type="submit"
