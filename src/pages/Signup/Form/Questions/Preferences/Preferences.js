@@ -62,7 +62,7 @@ function Preferences({ handleFormSubmission }) {
           }
         : { error: false, key: "gifRate" };
     errorsReducer(errors, reducerProps);
-    setGifRate(gifRateField.current.value);
+    setAnswers({ ...answers, gifRateField: gifRateField.current.value });
   };
 
   const handleDogsAllowedChange = (e) => {
@@ -77,10 +77,16 @@ function Preferences({ handleFormSubmission }) {
   };
 
   const preferenceAnswers = () => {
-    if (!dogsAllowed) {
-      setErrors({ ...errors, dogsAllowed: "Select wether dogs are allowed" });
+    if (!answers.dogsAllowed) {
+      errorsReducer(errors, {
+        error: true,
+        key: "dogsAllowed",
+        message: "Select wether dogs are allowed",
+      });
+      // if errors break out and dont submit
       return;
     }
+    const { gifRate, dogsAllowed } = answers;
     setUser({ ...user, gifRate, dogsAllowed });
   };
   return (
