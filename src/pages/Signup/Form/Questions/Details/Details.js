@@ -3,7 +3,7 @@ import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";
 
-function Details({ formProgress, setFormProgress }) {
+function Details({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
   const [errors, setErrors] = useState({});
 
@@ -91,22 +91,15 @@ function Details({ formProgress, setFormProgress }) {
     }
   };
 
-  const handleFormSubmission = (e) => {
-    e.preventDefault();
-
+  const detailsAnswers = () => {
     setUser({ ...user, userName, email, password });
-
-    let newQuestionedAnswered = (formProgress.questionsAnswered += 1);
-    let newCurrentlyOn = (formProgress.currentlyOnQuestion += 1);
-    setFormProgress({
-      ...formProgress,
-      questionsAnswered: newQuestionedAnswered,
-      currentlyOnQuestion: newCurrentlyOn,
-    });
   };
 
   return (
-    <form onSubmit={handleFormSubmission}>
+    <form onSubmit={(event)=>{
+        event.preventDefault(),
+        handleFormSubmission(detailsAnswers)
+    }}>
       <div className={Styles.flexContainer}>
         <div>
           <div className={Styles.questionWrapper}>

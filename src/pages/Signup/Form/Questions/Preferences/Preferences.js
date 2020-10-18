@@ -2,7 +2,7 @@ import React, { useState, useContext, useRef } from "react";
 import Styles from "./Preferences.module.css";
 import { UserContext } from "../../../../../Context/userContext";
 
-function Preferences({ formProgress, setFormProgress }) {
+function Preferences({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
   const [errors, setErrors] = useState({});
 
@@ -10,7 +10,7 @@ function Preferences({ formProgress, setFormProgress }) {
   const [gifRate, setGifRate] = useState("");
 
   const dogOptions = [
-    { id: "0", text: "Unselected"},
+    { id: "0", text: "Unselected" },
     { id: "1", text: "Never" },
     { id: "2", text: "Some Times" },
     { id: "3", text: "Often" },
@@ -20,18 +20,17 @@ function Preferences({ formProgress, setFormProgress }) {
   const gifRateField = useRef();
 
   const handleDogsAllowedChange = (e) => {
-      const value = e.target.value
-      if(value !== 'Unselected'){
-        setDogsAllowed(e.target.value)
-        ifExistingErrorsDelete({key:'dogsAllowed'})
-      }else{
-          setErrors({dogsAllowed:'Please select option.'})
-      }
-
-  }
+    const value = e.target.value;
+    if (value !== "Unselected") {
+      setDogsAllowed(e.target.value);
+      ifExistingErrorsDelete({ key: "dogsAllowed" });
+    } else {
+      setErrors({ dogsAllowed: "Please select option." });
+    }
+  };
   const isDisabled = () => {
     const errorAsArray = Object.keys(errors).length;
-    console.log(dogsAllowed, gifRate)
+    console.log(dogsAllowed, gifRate);
     if (dogsAllowed && gifRate && !errorAsArray) {
       return (
         <button type="submit" className={`${Styles.mainActionButton} `}>
@@ -55,32 +54,26 @@ function Preferences({ formProgress, setFormProgress }) {
   };
 
   const handleGifRateChange = () => {
-      if(gifRateField.current.value > 0 && gifRateField.current.value <= 10){
-          setGifRate(gifRateField.current.value)
-          ifExistingErrorsDelete({key:'gifRate'})
-      } else {
-          setErrors({gifRate:'This is an invalid GIF rate'})
-      }
+    if (gifRateField.current.value > 0 && gifRateField.current.value <= 10) {
+      setGifRate(gifRateField.current.value);
+      ifExistingErrorsDelete({ key: "gifRate" });
+    } else {
+      setErrors({ gifRate: "This is an invalid GIF rate" });
+    }
   };
-  const handleFormSubmission = (e) => {
-    e.preventDefault();
-    if(!dogsAllowed){
-        setErrors({...errors, dogsAllowed:'Select wether dogs are allowed'})
-        return
+  const preferenceAnswers = () => {
+    if (!dogsAllowed) {
+      setErrors({ ...errors, dogsAllowed: "Select wether dogs are allowed" });
+      return;
     }
     setUser({ ...user, gifRate, dogsAllowed });
-
-    let newQuestionedAnswered = (formProgress.questionsAnswered += 1);
-    let newCurrentlyOn = (formProgress.currentlyOnQuestion += 1);
-    setFormProgress({
-      ...formProgress,
-      questionsAnswered: newQuestionedAnswered,
-      currentlyOnQuestion: newCurrentlyOn,
-    });
-
   };
   return (
-    <form onSubmit={handleFormSubmission}>
+    <form
+      onSubmit={(event) => {
+        event.preventDefault(), handleFormSubmission(preferenceAnswers);
+      }}
+    >
       <div className={Styles.flexContainer}>
         <div>
           <div className={Styles.questionWrapper}>
@@ -95,7 +88,9 @@ function Preferences({ formProgress, setFormProgress }) {
                 required
               >
                 {dogOptions.map((option) => (
-                  <option key={option.id} value={option.text}>{option.text}</option>
+                  <option key={option.id} value={option.text}>
+                    {option.text}
+                  </option>
                 ))}
               </select>
               {errors.dogsAllowed && (

@@ -5,8 +5,6 @@ import Details from "./Questions/Details/Details";
 import Preferences from "./Questions/Preferences/Preferences";
 import Confirm from "./Questions/Confirm/Confirm";
 
-
-
 function Form() {
   const { user, setUser } = useContext(UserContext);
   const [formProgress, setFormProgress] = useState({
@@ -14,35 +12,40 @@ function Form() {
     currentlyOnQuestion: 0,
   });
 
-
-
-const movePage = (formProgress, setFormProgress, index) => {
+  const movePage = (formProgress, setFormProgress, index) => {
     setTimeout(() => {
       let newPage = (formProgress.currentlyOnQuestion += index);
       setFormProgress({ ...formProgress, currentlyOnQuestion: newPage });
     }, 200);
   };
 
+  /**
+   *
+   * @param {cb}
+   * This takes a cb function unique to the question page
+   * means do not have to pass form data to each comp
+   */
+  const handleFormSubmission = (cb) => {
+    cb();
+    let newQuestionedAnswered = (formProgress.questionsAnswered += 1);
+    let newCurrentlyOn = (formProgress.currentlyOnQuestion += 1);
+    setFormProgress({
+      ...formProgress,
+      questionsAnswered: newQuestionedAnswered,
+      currentlyOnQuestion: newCurrentlyOn,
+    });
+  };
 
   const questionToShow = ({ currentlyOnQuestion }) => {
     if (!currentlyOnQuestion && currentlyOnQuestion !== 0)
       return <div>Loading</div>;
-        const Questions = [
-        <Details
-            formProgress={formProgress}
-            setFormProgress={setFormProgress}
-        />,
-        <Preferences
-            formProgress={formProgress}
-            setFormProgress={setFormProgress}
-        />,
-        <Confirm
-            formProgress={formProgress}
-            setFormProgress={setFormProgress}
-        />,
-        ];
-        return Questions[currentlyOnQuestion];
-    };
+    const Questions = [
+      <Details handleFormSubmission={handleFormSubmission} />,
+      <Preferences handleFormSubmission={handleFormSubmission} />,
+      <Confirm formProgress={formProgress} setFormProgress={setFormProgress} />,
+    ];
+    return Questions[currentlyOnQuestion];
+  };
   const question = questionToShow(formProgress);
   return (
     <div>
