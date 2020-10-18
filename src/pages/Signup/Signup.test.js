@@ -6,7 +6,7 @@ import Completed from './Completed/Completed';
 import Loading from './Loading/Loading';
 import { UserContext } from '../../Context/userContext';
 
-describe('Signup Component', () => {
+xdescribe('Signup Component', () => {
   it('Should render Loading component if loading', () => {
     const context = { };
     const wrapper = mount(
