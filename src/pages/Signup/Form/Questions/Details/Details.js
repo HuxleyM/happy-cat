@@ -1,20 +1,39 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, { useState, useContext, useRef, useReducer } from "react";
 import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
+function reducer(state, action){
+    switch (action.type){
+        case "userName":
+            state[action.type] = action.value
+            return state
+        case "password":
+        case "passwordRetype":
+        case "email":
+        case "emailRetype":
+    }
+
+}
+
+const updateState = (state, action) => {
+    state[action.type] = action.value
+    return state
+}
+
 function Details({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
   const [errors, setErrors] = useState({});
+  const [answers, setAnswers]= useReducer(reducer, {})
 
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordRetype, setPasswordRetype] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailRetype, setEmailRetype] = useState("");
-  const [passwordShown, setPasswordShown] = useState(false);
+//   const [userName, setUserName] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [passwordRetype, setPasswordRetype] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [emailRetype, setEmailRetype] = useState("");
+//   const [passwordShown, setPasswordShown] = useState(false);
 
   const userNameField = useRef();
   const passwordField = useRef();
@@ -22,19 +41,16 @@ function Details({ handleFormSubmission }) {
   const emailField = useRef();
   const emailRetypeField = useRef();
 
-  const handleUserNameChange = () => {
-    setUserName(userNameField.current.value);
-  };
-
+  /// i d love to tidy this but do not know how to
   const isDisabled = () => {
     const errorAsArray = Object.keys(errors).length;
 
     if (
-      userName &&
-      password &&
-      passwordRetype &&
-      emailRetype &&
-      email &&
+      answers.userName &&
+      answers.password &&
+      answers.passwordRetype &&
+      answers.emailRetype &&
+      answers.email &&
       !errorAsArray
     ) {
       return (
@@ -58,11 +74,16 @@ function Details({ handleFormSubmission }) {
     }
   };
 
+  // ---------------------------------------------------------------------- handle changes 
+  const handleUserNameChange = () => {
+    setAnswers({...answers, userName: userNameField.current.value});
+  };
+
   const handleEmailChange = () => {
     if (!utils.validEmail(emailField.current.value)) {
       setErrors({ ...errors, email: "This is not a valid email." });
     } else {
-      setEmail(emailField.current.value);
+      setAnswers({...answers, email: emailField.current.value});
       ifExistingErrorsDelete({ key: "email" });
     }
   };
@@ -71,7 +92,7 @@ function Details({ handleFormSubmission }) {
     if (emailField.current.value !== emailRetypeField.current.value) {
       setErrors({ ...errors, emailRetype: "Emails do not match." });
     } else {
-      setEmailRetype(emailRetypeField.current.value);
+        setAnswers({...answers,emailRetype:emailRetypeField.current.value});
       ifExistingErrorsDelete({ key: "emailRetype" });
     }
   };
@@ -80,7 +101,7 @@ function Details({ handleFormSubmission }) {
     if (!utils.validPassword(passwordField.current.value)) {
       setErrors({ ...errors, password: "This is not a valid password." });
     } else {
-      setPassword(passwordField.current.value);
+      setAnswers(passwordField.current.value);
       ifExistingErrorsDelete({ key: "password" });
     }
   };
@@ -89,19 +110,17 @@ function Details({ handleFormSubmission }) {
     if (passwordField.current.value !== passwordRetypeField.current.value) {
       setErrors({ ...errors, passwordRetype: "Password do not match." });
     } else {
-      setPasswordRetype(passwordRetypeField.current.value);
+      setAnswers({...answers, passwordRetype:passwordRetypeField.current.value});
       ifExistingErrorsDelete({ key: "passwordRetype" });
     }
   };
 
-  const detailsAnswers = () => {
-    setUser({ ...user, userName, email, password });
-  };
 
-  const togglePasswordVisiblity = () => {
-    console.log('hello')
-    setPasswordShown(passwordShown ? false : true);
-  };
+  // on change happens every click safe to assume this is working
+  const detailsAnswers = () => setUser({ ...user, userName, email, password });
+
+  const togglePasswordVisiblity = () => setPasswordShown(passwordShown ? false : true);
+ 
 
   return (
     <form
