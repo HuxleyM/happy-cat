@@ -1,4 +1,4 @@
-describe("it renders details form", () => {
+describe("suceesfully completes happy path through details", () => {
     before(() => {
       cy.visit("/");
       cy.waitForReact();
