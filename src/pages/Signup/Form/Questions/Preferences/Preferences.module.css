@@ -6,6 +6,17 @@
   width: 60vw;
   padding-top: 35px;
 }
+
+.moveToEnd {
+  margin-top: 28px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.moveToEnd > :first-child {
+  margin-right: 10px;
+}
+
 .questionWrapper {
   display: flex;
   flex-wrap: wrap;
@@ -29,7 +40,7 @@
 .mainActionButton {
   background-color: var(--colour-blue);
   height: 54px;
-  width: 188px;
+  width: 160px;
   border-radius: 10px;
   cursor: pointer;
   border-style: none;

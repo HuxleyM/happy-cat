@@ -5,8 +5,8 @@ import Styles from "./Confirm.module.css";
 function Confirm() {
   const { user, setUser } = useContext(UserContext);
   const submitForm = () => {
-      setUser({...user, completed:true})
-  }
+    setUser({ ...user, completed: true });
+  };
   return (
     <div>
       <div className={Styles.header}>
@@ -43,13 +43,15 @@ function Confirm() {
           <p>{user.gifRate}</p>
         </div>
       </div>
-      <button
-        type="submit"
-        className={`${Styles.mainActionButton}`}
-        onClick={submitForm}
-      >
-        Save and next
-      </button>
+      <div className={Styles.moveToEnd}>
+        <button
+          type="submit"
+          className={`${Styles.mainActionButton}`}
+          onClick={submitForm}
+        >
+          Save and next
+        </button>
+      </div>
     </div>
   );
 }

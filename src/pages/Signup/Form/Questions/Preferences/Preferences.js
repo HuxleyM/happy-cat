@@ -120,7 +120,9 @@ function Preferences({ handleFormSubmission }) {
           </div>
         </div>
       </div>
-      {isDisabled()}
+      <div className={Styles.moveToEnd}>
+        {isDisabled()}
+      </div>
     </form>
   );
 }

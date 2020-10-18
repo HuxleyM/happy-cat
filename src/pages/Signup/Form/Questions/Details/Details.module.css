@@ -41,10 +41,21 @@
 .mainActionButton {
   background-color: var(--colour-blue);
   height: 54px;
-  width: 188px;
+  width: 160px;
   border-radius: 10px;
   cursor: pointer;
   border-style: none;
+  width: 160px;
+}
+
+.moveToEnd {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+
+.moveToEnd > :first-child {
+  margin-right: 24px;
 }
 
 @media only screen and (max-width: 600px) {
