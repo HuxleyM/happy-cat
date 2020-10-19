@@ -2,24 +2,33 @@ import React, { useState, useContext, useRef, useReducer } from "react";
 import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";
-import PasswordFields from './PasswordFields/PasswordFields'
-function errorsReducer(state, { key, error, message = "" }) {
-  if (error) {
-    state[key] = message;
+import PasswordFields from "./PasswordFields/PasswordFields";
+function errorsReducer(state, setErrors, { key, error, message = "" }) {
+  if (error && state[key]) {
+    return;
+  } else if (error && !state[key]) {
+    state[key] = true;
+    setErrors({ ...state });
+  } else if (!error && state[key]) {
+    state[key] = false;
+    setErrors({ ...state });
   } else {
-    delete state[key];
+    return;
   }
-  return state;
 }
 
 function Details({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
-  const [errors, setErrors] = useReducer(errorsReducer, {});
+  const [errors, setErrors] = useState({
+      userName:false,
+      email: false,
+      emailRetype:false,
+      password: false,
+      passwordRetype: false,
+  });
   const [answers, setAnswers] = useState({});
 
-
   const userNameField = useRef();
-
   const emailField = useRef();
   const emailRetypeField = useRef();
 
@@ -29,7 +38,7 @@ function Details({ handleFormSubmission }) {
     const errorAsArray = Object.keys(errors).length;
     const answersAsArray = Object.keys(answers).length;
     // disbaled needs false flag to disable and
-    const usable = (errorAsArray === 0 && answersAsArray === 5) ? false : true;
+    const usable = errorAsArray === 0 && answersAsArray === 5 ? false : true;
     return (
       <button
         type="submit"
@@ -42,35 +51,29 @@ function Details({ handleFormSubmission }) {
   };
 
   // ---------------------------------------------------------------------- handle changes
-  const handleUserNameChange = () => {
-    setAnswers({ ...answers, userName: userNameField.current.value });
-  };
 
   const handleEmailChange = () => {
     const reducerProps = !utils.validEmail(emailField.current.value)
-      ? { error: true, key: "email", message: "This is not a valid email." }
+      ? { error: true, key: "email"}
       : { error: false, key: "email" };
-    errorsReducer(errors, reducerProps);
-    setAnswers({ ...answers, email: emailField.current.value });
+    errorsReducer(errors,setErrors, reducerProps);
+
   };
 
   const handleEmailRetypeChange = () => {
     const reducerProps =
       emailField.current.value !== emailRetypeField.current.value
-        ? { error: true, key: "emailRetype", message: "Emails do not match." }
+        ? { error: true, key: "emailRetype"}
         : { error: false, key: "emailRetype" };
     errorsReducer(errors, reducerProps);
-    setAnswers({ ...answers, emailRetype: emailRetypeField.current.value });
-  };
 
+  };
 
   // on change happens every click safe to assume this is working
   const detailsAnswers = () => {
     const { userName, email, password } = answers;
     setUser({ ...user, userName, email, password });
   };
-
-
 
   return (
     <form
@@ -89,13 +92,9 @@ function Details({ handleFormSubmission }) {
                 id="userName"
                 name="userName"
                 ref={userNameField}
-                onChange={handleUserNameChange}
                 value={user.userName}
                 required
               ></input>
-              {errors.username && (
-                <div className={Styles.inputError}>emails do not match</div>
-              )}
             </div>
           </div>
 
@@ -112,7 +111,7 @@ function Details({ handleFormSubmission }) {
                 onChange={handleEmailChange}
               ></input>
               {errors.email && (
-                <div className={Styles.inputError}>{errors.email}</div>
+                <div className={Styles.inputError}>This is not a valid email.</div>
               )}
             </div>
           </div>
@@ -130,19 +129,20 @@ function Details({ handleFormSubmission }) {
                 required
               ></input>
               {errors.emailRetype && (
-                <div className={Styles.inputError}>{errors.emailRetype}</div>
+                <div className={Styles.inputError}>Emails do not match.</div>
               )}
             </div>
           </div>
         </div>
 
         <PasswordFields
-            user={user}
-            errors={errors}
-            errorsReducer={errorsReducer}
-            answers={answers}
-            setAnswers={setAnswers}/>
-        </div>
+          user={user}
+          errors={errors}
+          errorsReducer={errorsReducer}
+          answers={answers}
+          setAnswers={setAnswers}
+        />
+      </div>
       <div className={Styles.moveToEnd}>{isDisabled()}</div>
     </form>
   );
