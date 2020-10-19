@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "../../../../../Context/userContext";
 import Styles from "./Confirm.module.css";
 

@@ -13,7 +13,7 @@ function errorsReducer(state, { key, error, message = "" }) {
 
 function Preferences({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
-  const [errors, setErrors] = useState({});
+  const [errors] = useState({});
   const [answers, setAnswers] = useState("");
 
   const dogOptions = [

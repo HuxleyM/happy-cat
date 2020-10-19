@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useReducer } from "react";
+import React, { useState, useContext, useRef } from "react";
 import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";

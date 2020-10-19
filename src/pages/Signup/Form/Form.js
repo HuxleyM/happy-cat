@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Styles from "./Form.module.css";
-import { UserContext } from "../../../Context/userContext";
 import Details from "./Questions/Details/Details";
 import Preferences from "./Questions/Preferences/Preferences";
 import Confirm from "./Questions/Confirm/Confirm";
@@ -12,7 +11,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function Form() {
-  const { user, setUser } = useContext(UserContext);
   const [formProgress, setFormProgress] = useState({
     questionsAnswered: 0,
     currentlyOnQuestion: 0,
