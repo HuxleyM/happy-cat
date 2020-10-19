@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";
@@ -23,7 +23,6 @@ function Details({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
   const [passwordShown, setPasswordShown] = useState(false);
   const [errors, setErrors] = useState({
-    userName: undefined,
     email: undefined,
     emailRetype: undefined,
     password: undefined,
@@ -39,10 +38,7 @@ function Details({ handleFormSubmission }) {
   const isDisabled = () => {
     let formComplete = true;
     for (const field in errors) {
-      if (field !== false) {
-        // so true or undefined
-        formComplete = false;
-      }
+      if (errors[field] !== false) formComplete = false;
     }
     // disables must be provided false to be disabled
     return (
@@ -63,6 +59,9 @@ function Details({ handleFormSubmission }) {
       ? { error: true, key: "email" }
       : { error: false, key: "email" };
     errorsReducer(errors, setErrors, reducerProps);
+    if(emailRetypeField.current.value){
+        handleEmailRetypeChange()
+    }
   };
 
   const handleEmailRetypeChange = () => {
@@ -79,6 +78,10 @@ function Details({ handleFormSubmission }) {
           key: "password",
         }
       : { error: false, key: "password" };
+      // if value in retype but error caused by faulty original value
+      if(passwordRetypeField.current.value){
+        handlePasswordRetypeChange()
+      }
     errorsReducer(errors, setErrors, reducerProps);
   };
 

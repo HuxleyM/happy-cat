@@ -12,8 +12,8 @@ import {
 
 function Form() {
   const [formProgress, setFormProgress] = useState({
-    questionsAnswered: 0,
-    currentlyOnQuestion: 0,
+    questionsAnswered: 1,
+    currentlyOnQuestion: 1,
   });
 
   const movePage = (formProgress, setFormProgress, index) => {
