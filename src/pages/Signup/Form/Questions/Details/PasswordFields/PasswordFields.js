@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useReducer } from "react";
+import React, { useState, useRef} from "react";
 import Styles from "./PasswordFields.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";

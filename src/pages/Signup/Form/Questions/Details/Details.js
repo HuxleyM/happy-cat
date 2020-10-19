@@ -14,7 +14,7 @@ function errorsReducer(state, { key, error, message = "" }) {
 
 function Details({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
-  const [errors, setErrors] = useReducer(errorsReducer, {});
+  const [errors] = useReducer(errorsReducer, {});
   const [answers, setAnswers] = useState({});
 
   const userNameField = useRef();
@@ -86,7 +86,7 @@ function Details({ handleFormSubmission }) {
                 id="userName"
                 name="userName"
                 ref={userNameField}
-                value={user.userName}
+                defaultValue={user.userName}
                 required
               ></input>
             </div>

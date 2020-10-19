@@ -1,9 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Details from '../Details'
-import { UserContext } from '../../../../../../Context/userContext';
-import * as utils from '../Details'
+import Details from './Details'
+import { UserContext } from '../../../../../Context/userContext';
+import * as utils from './Details'
 
+/**
+ * This is the test suite where i bumbed into an error, 
+ * I could not 'find' the element i wanted
+ */
 xdescribe('Details form components', () => {
 
     const context = { };
