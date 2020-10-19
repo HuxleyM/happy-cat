@@ -36,7 +36,7 @@ function Preferences({ handleFormSubmission }) {
     const answersAsArray = Object.keys(answers).length
 
     let usable = (answersAsArray === 2 && errorsAsArray === 0 ) ? true : false;
-    console.log(answersAsArray, errorsAsArray)
+
     // disables must be provided false to be disabled
     return (
       <button
