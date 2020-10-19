@@ -20,7 +20,7 @@ function NavBar({ formProgress }) {
       className = `${Styles.incomplete}`;
     }
 
-    return <li className={className}>{component.title}</li>;
+    return <li key={component.id} className={className}>{component.title}</li>;
   });
   return (
     <nav className={Styles.navBar}>
