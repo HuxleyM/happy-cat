@@ -2,8 +2,10 @@ import React, { useState, useContext, useRef, useReducer } from "react";
 import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";
-import PasswordFields from "./PasswordFields/PasswordFields";
-function errorsReducer(state, setErrors, { key, error, message = "" }) {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+function errorsReducer(state, setErrors, { key, error }) {
   if (error && state[key]) {
     return;
   } else if (error && !state[key]) {
@@ -19,30 +21,34 @@ function errorsReducer(state, setErrors, { key, error, message = "" }) {
 
 function Details({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
+  const [passwordShown, setPasswordShown] = useState(false);
   const [errors, setErrors] = useState({
-      userName:false,
-      email: false,
-      emailRetype:false,
-      password: false,
-      passwordRetype: false,
+    userName: undefined,
+    email: undefined,
+    emailRetype: undefined,
+    password: undefined,
+    passwordRetype: undefined,
   });
-  const [answers, setAnswers] = useState({});
 
   const userNameField = useRef();
   const emailField = useRef();
   const emailRetypeField = useRef();
+  const passwordField = useRef();
+  const passwordRetypeField = useRef();
 
-  /// i d love to tidy this but do not know how to
-  // this can be its own componenet - ran out of time
   const isDisabled = () => {
-    const errorAsArray = Object.keys(errors).length;
-    const answersAsArray = Object.keys(answers).length;
-    // disbaled needs false flag to disable and
-    const usable = errorAsArray === 0 && answersAsArray === 5 ? false : true;
+    let formComplete = true;
+    for (const field in errors) {
+      if (field !== false) {
+        // so true or undefined
+        formComplete = false;
+      }
+    }
+    // disables must be provided false to be disabled
     return (
       <button
         type="submit"
-        disabled={usable}
+        disabled={!formComplete}
         className={`${Styles.mainActionButton} `}
       >
         Save and next
@@ -54,25 +60,51 @@ function Details({ handleFormSubmission }) {
 
   const handleEmailChange = () => {
     const reducerProps = !utils.validEmail(emailField.current.value)
-      ? { error: true, key: "email"}
+      ? { error: true, key: "email" }
       : { error: false, key: "email" };
-    errorsReducer(errors,setErrors, reducerProps);
-
+    errorsReducer(errors, setErrors, reducerProps);
   };
 
   const handleEmailRetypeChange = () => {
     const reducerProps =
       emailField.current.value !== emailRetypeField.current.value
-        ? { error: true, key: "emailRetype"}
+        ? { error: true, key: "emailRetype" }
         : { error: false, key: "emailRetype" };
-    errorsReducer(errors, reducerProps);
-
+    errorsReducer(errors, setErrors, reducerProps);
+  };
+  const handlePasswordChange = () => {
+    const reducerProps = !utils.validPassword(passwordField.current.value)
+      ? {
+          error: true,
+          key: "password",
+        }
+      : { error: false, key: "password" };
+    errorsReducer(errors, setErrors, reducerProps);
   };
 
-  // on change happens every click safe to assume this is working
+  const handlePasswordRetypeChange = () => {
+    const reducerProps =
+      passwordField.current.value !== passwordRetypeField.current.value
+        ? {
+            error: true,
+            key: "passwordRetype",
+          }
+        : { error: false, key: "passwordRetype" };
+    errorsReducer(errors, setErrors, reducerProps);
+  };
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
+
+  // on change handles validation safe to assume can not get here if fault
   const detailsAnswers = () => {
-    const { userName, email, password } = answers;
-    setUser({ ...user, userName, email, password });
+    setUser({
+      ...user,
+      userName: userNameField.current.value,
+      email: emailField.current.value,
+      password: passwordField.current.value,
+    });
   };
 
   return (
@@ -111,7 +143,9 @@ function Details({ handleFormSubmission }) {
                 onChange={handleEmailChange}
               ></input>
               {errors.email && (
-                <div className={Styles.inputError}>This is not a valid email.</div>
+                <div className={Styles.inputError}>
+                  This is not a valid email.
+                </div>
               )}
             </div>
           </div>
@@ -135,13 +169,62 @@ function Details({ handleFormSubmission }) {
           </div>
         </div>
 
-        <PasswordFields
-          user={user}
-          errors={errors}
-          errorsReducer={errorsReducer}
-          answers={answers}
-          setAnswers={setAnswers}
-        />
+        <div>
+          <div className={Styles.questionWrapper}>
+            <div>
+              <label htmlFor="password">Password:</label>
+              <span
+                className={Styles.passwordVisibility}
+                onClick={() => togglePasswordVisiblity()}
+              >
+                <FontAwesomeIcon icon={passwordShown ? faEye : faEyeSlash} />
+              </span>
+              <p className={Styles.passwordInstructions}>
+                Password must contain at least 8 digits, a special character and
+                a number.
+              </p>
+            </div>
+            <div>
+              <input
+                type={passwordShown ? "text" : "password"}
+                id="password"
+                name="password"
+                ref={passwordField}
+                value={user.password}
+                onChange={handlePasswordChange}
+                required
+              ></input>
+              {errors.password && (
+                <div className={Styles.inputError}>
+                  This is not a valid password.
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className={Styles.questionWrapper}>
+            <label htmlFor="passwordRetype">Retype password:</label>
+            <div>
+              <input
+                type={passwordShown ? "text" : "password"}
+                id="passwordRetype"
+                name="passwordRetype"
+                ref={passwordRetypeField}
+                value={user.password}
+                onChange={handlePasswordRetypeChange}
+                required
+              ></input>
+              <div>
+                {errors.passwordRetype && (
+                  <div className={Styles.inputError}>
+                    {" "}
+                    Password do not match.
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div className={Styles.moveToEnd}>{isDisabled()}</div>
     </form>
