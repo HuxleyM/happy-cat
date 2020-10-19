@@ -17,6 +17,7 @@ I need more time with testing and react as i found my tests where often measurin
 The form is fully accessible
 Onchange handlers ensure a user can only submit a form once fields have been validated
 field validations
+toggle password visibility
 css modules
 
 # wireframes

@@ -1,10 +1,20 @@
-import React, { useState, useRef} from "react";
+import React, { useState, useRef, useContext} from "react";
 import Styles from "./PasswordFields.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import * as utils from "../utils";
+import { UserContext } from '../../../../../../Context/userContext';
 
-function PasswordFields({ user, errors, setAnswers, answers, errorsReducer }) {
+
+/***
+ * 
+ * I recognise this shouldn't have so many inputs
+ * if using vue i would have mapped this to state invloving a user object and validated and against this object 
+ * no need to pass answers or errors around like this
+ */
+
+function PasswordFields({ setErrors, errors, setAnswers, answers, errorsReducer }) {
+  const { user } = useContext(UserContext);
   const [passwordShown, setPasswordShown] = useState(false);
   const passwordField = useRef();
   const passwordRetypeField = useRef();
@@ -17,7 +27,7 @@ function PasswordFields({ user, errors, setAnswers, answers, errorsReducer }) {
           message: "This is not a valid password.",
         }
       : { error: false, key: "password" };
-    errorsReducer(errors, reducerProps);
+    errorsReducer(errors, setErrors, reducerProps);
     if (!errors.password) {
       setAnswers({ ...answers, password: passwordField.current.value });
     }
@@ -32,7 +42,7 @@ function PasswordFields({ user, errors, setAnswers, answers, errorsReducer }) {
             message: "Password do not match.",
           }
         : { error: false, key: "passwordRetype" };
-    errorsReducer(errors, reducerProps);
+    errorsReducer(errors, setErrors, reducerProps);
     if (!errors.passwordRetypeField) {
       setAnswers({
         ...answers,

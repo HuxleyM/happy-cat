@@ -1,24 +1,29 @@
-import React, { useState, useContext, useRef, useReducer } from "react";
+import React, { useState, useContext, useRef } from "react";
 import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";
 import PasswordFields from "./PasswordFields/PasswordFields";
-function errorsReducer(state, { key, error, message = "" }) {
-  if (error) {
+
+
+function errorsReducer(state, setErrors,{ key, error, message = "" }) {
+  if (error && !state[key]) {
     state[key] = message;
-  } else {
+    setErrors({...state})
+  } else if(!error && state[key]){
     delete state[key];
+    setErrors({...state})
+  } else{
+      return
   }
-  return state;
+
 }
 
 function Details({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
-  const [errors] = useReducer(errorsReducer, {});
+  const [errors, setErrors] = useState({});
   const [answers, setAnswers] = useState({});
 
   const userNameField = useRef();
-
   const emailField = useRef();
   const emailRetypeField = useRef();
 
@@ -28,7 +33,8 @@ function Details({ handleFormSubmission }) {
     const errorAsArray = Object.keys(errors).length;
     const answersAsArray = Object.keys(answers).length;
     // disbaled needs false flag to disable and
-    const usable = errorAsArray === 0 && answersAsArray === 5 ? false : true;
+    console.log(errorAsArray, answersAsArray)
+    const usable = errorAsArray === 0 && answersAsArray === 4 ? false : true;
     return (
       <button
         type="submit"
@@ -46,7 +52,7 @@ function Details({ handleFormSubmission }) {
     const reducerProps = !utils.validEmail(emailField.current.value)
       ? { error: true, key: "email", message: "This is not a valid email." }
       : { error: false, key: "email" };
-    errorsReducer(errors, reducerProps);
+    errorsReducer(errors, setErrors, reducerProps);
     if (!errors.email) {
       setAnswers({ ...answers, email: emailField.current.value });
     }
@@ -57,7 +63,7 @@ function Details({ handleFormSubmission }) {
       emailField.current.value !== emailRetypeField.current.value
         ? { error: true, key: "emailRetype", message: "Emails do not match." }
         : { error: false, key: "emailRetype" };
-    errorsReducer(errors, reducerProps);
+    errorsReducer(errors, setErrors, reducerProps);
     if (!errors.emailRetype) {
       setAnswers({ ...answers, emailRetype: emailRetypeField.current.value });
     }
@@ -130,9 +136,9 @@ function Details({ handleFormSubmission }) {
         </div>
 
         <PasswordFields
-          user={user}
           errors={errors}
           errorsReducer={errorsReducer}
+          setErrors={setErrors}
           answers={answers}
           setAnswers={setAnswers}
         />
