@@ -18,7 +18,6 @@ function errorsReducer(state, setErrors, { key, error }) {
 
 function Preferences({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
-  const [started, setStarted] = useState(false)
   const [answers, setAnswers] = useState(false)
   const [errors, setErrors] = useState({});
 
@@ -51,7 +50,6 @@ function Preferences({ handleFormSubmission }) {
   };
 
   const handleGifRateChange = () => {
-    if(!started) setStarted(true)
     const reducerProps =
       gifRateField.current.value < 0 || gifRateField.current.value >= 10
         ? {
@@ -68,7 +66,6 @@ function Preferences({ handleFormSubmission }) {
   };
 
   const handleDogsAllowedChange = () => {
-    if(!started) setStarted(true)
     const value = dogsAllowedField.current.value;
     const reducerProps =
       value === "Unselected"
