@@ -8,9 +8,12 @@ import { UserContext } from '../../../../../../Context/userContext';
 
 /***
  * 
- * I recognise this shouldn't have so many inputs
- * if using vue i would have mapped this to state invloving a user object and validated and against this object 
- * no need to pass answers or errors around like this
+ * I recognise this shouldn't have so many arguments
+ * if using vue i would have mapped this to state involving a user object and validated and against this object 
+ * no need to pass answers or errors around like this :(
+ * 
+ * password is broken out from the form to reduce file size of the other one as well to allow it 
+ * room to add a password strength meter
  */
 
 function PasswordFields({ setErrors, errors, setAnswers, answers, errorsReducer }) {

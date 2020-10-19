@@ -27,14 +27,13 @@ function Details({ handleFormSubmission }) {
   const emailField = useRef();
   const emailRetypeField = useRef();
 
-  /// i d love to tidy this but do not know how to
+  
   // this can be its own componenet - ran out of time
   const isDisabled = () => {
     const errorAsArray = Object.keys(errors).length;
     const answersAsArray = Object.keys(answers).length;
     // disbaled needs false flag to disable and
-    console.log(errorAsArray, answersAsArray)
-    const usable = errorAsArray === 0 && answersAsArray === 4 ? false : true;
+    const usable = errorAsArray === 0 && answersAsArray === 5 ? false : true;
     return (
       <button
         type="submit"
@@ -57,6 +56,13 @@ function Details({ handleFormSubmission }) {
       setAnswers({ ...answers, email: emailField.current.value });
     }
   };
+
+  const handleUserNameChange = () => {
+      const value = userNameField.current.value
+      if(value.length > 3){
+          setAnswers({...answers, username:value})
+      }
+  }
 
   const handleEmailRetypeChange = () => {
     const reducerProps =
@@ -91,8 +97,9 @@ function Details({ handleFormSubmission }) {
                 type="text"
                 id="userName"
                 name="userName"
+                onChange={handleUserNameChange}
                 ref={userNameField}
-                defaultValue={user.userName}
+                value={user.userName}
                 required
               ></input>
             </div>
