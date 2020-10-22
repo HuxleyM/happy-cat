@@ -91,7 +91,7 @@ function Details({ handleFormSubmission }) {
       <div className={Styles.flexContainer}>
         <div>
           <div className={Styles.questionWrapper}>
-            <label htmlFor="userName">User name:</label>
+            <label htmlFor="userName">User name: (should be 5 chars)</label>
             <div>
               <input
                 type="text"
