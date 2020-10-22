@@ -59,8 +59,8 @@ function Details({ handleFormSubmission }) {
 
   const handleUserNameChange = () => {
       const value = userNameField.current.value
-      if(value.length > 3){
-          setAnswers({...answers, username:value})
+      if(value.length > 5){
+          setAnswers({...answers, userName:value})
       }
   }
 
@@ -99,7 +99,7 @@ function Details({ handleFormSubmission }) {
                 name="userName"
                 onChange={handleUserNameChange}
                 ref={userNameField}
-                value={user.userName}
+                value={answers.userName || user.userName }
                 required
               ></input>
             </div>
@@ -114,7 +114,7 @@ function Details({ handleFormSubmission }) {
                 name="email"
                 required
                 ref={emailField}
-                value={user.email}
+                value={answers.email ||user.email}
                 onChange={handleEmailChange}
               ></input>
               {errors.email && (
@@ -131,7 +131,7 @@ function Details({ handleFormSubmission }) {
                 id="emailRetype"
                 name="emailRetype"
                 ref={emailRetypeField}
-                value={user.email}
+                value={answers.emailRetype ||user.email}
                 onChange={handleEmailRetypeChange}
                 required
               ></input>
