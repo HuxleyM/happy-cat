@@ -48,7 +48,7 @@ I'd like to implement end to end testing with cypress but had time restraints an
 
 Finish setting up eslint.
 
-# Design
+# Commands
 
 ## basic commands || get it running locally
 
