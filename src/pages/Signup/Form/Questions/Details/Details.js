@@ -1,33 +1,74 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useReducer } from "react";
 import Styles from "./Details.module.css";
 import * as utils from "./utils";
 import { UserContext } from "../../../../../Context/userContext";
 import PasswordFields from "./PasswordFields/PasswordFields";
 
-
-function errorsReducer(state, setErrors,{ key, error, message = "" }) {
+function errorsReducer(state, setErrors, { key, error, message = "" }) {
   if (error && !state[key]) {
     state[key] = message;
-    setErrors({...state})
-  } else if(!error && state[key]){
+    setErrors({ ...state });
+  } else if (!error && state[key]) {
     delete state[key];
-    setErrors({...state})
-  } else{
-      return
+    setErrors({ ...state });
+  } else {
+    return;
   }
-
 }
+
+const initialFormData = {
+  name: null,
+  email: null,
+  secondEmail: null,
+  firstPassword: null,
+  secondPassword: null,
+};
+
+const formDataReducerHandler = (state, { type, payload }) => {
+  switch (type) {
+    case "updateName":
+      return {
+        ...state,
+        name: payload,
+      };
+    case "email":
+      return {
+        ...state,
+        email: payload,
+      };
+    case "secondEmail":
+      return {
+        ...state,
+        secondEmail: payload,
+      };
+    case "firstPassword":
+      return {
+        ...state,
+        firstPassword: payload,
+      };
+    case "secondPassword":
+      return {
+        ...state,
+        secondPassword: payload,
+      };
+  }
+};
 
 function Details({ handleFormSubmission }) {
   const { user, setUser } = useContext(UserContext);
   const [errors, setErrors] = useState({});
   const [answers, setAnswers] = useState({});
+  console.log("Details Page");
+
+  const [formDataState, formDataReducer] = useReducer(
+    formDataReducerHandler,
+    initialFormData
+  );
 
   const userNameField = useRef();
   const emailField = useRef();
   const emailRetypeField = useRef();
 
-  
   // this can be its own componenet - ran out of time
   const isDisabled = () => {
     const errorAsArray = Object.keys(errors).length;
@@ -58,11 +99,11 @@ function Details({ handleFormSubmission }) {
   };
 
   const handleUserNameChange = () => {
-      const value = userNameField.current.value
-      if(value.length > 3){
-          setAnswers({...answers, username:value})
-      }
-  }
+    const value = userNameField.current.value;
+    if (value.length > 3) {
+      setAnswers({ ...answers, username: value });
+    }
+  };
 
   const handleEmailRetypeChange = () => {
     const reducerProps =
@@ -88,6 +129,7 @@ function Details({ handleFormSubmission }) {
         handleFormSubmission(detailsAnswers);
       }}
     >
+      {/* Create new component */}
       <div className={Styles.flexContainer}>
         <div>
           <div className={Styles.questionWrapper}>
